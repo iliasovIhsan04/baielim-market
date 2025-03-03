@@ -264,7 +264,8 @@ useEffect(() => {
         }
       >
         <StoryComponent />
-        <Text>oneSignal{pushToken}</Text>
+        
+        <Text>oneSignl{pushToken}</Text>
         <Column gap={10} style={{ marginBottom: 50 }}>
           <Wrapper padding={[20, 24]}>
             <Column gap={10}>
