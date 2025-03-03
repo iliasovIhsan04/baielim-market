@@ -1,28 +1,23 @@
 import * as React from "react"
-import Svg, { Rect, Path } from "react-native-svg"
-const SvgComponent = (props) => (
+import Svg, { Path } from "react-native-svg"
+import { forwardRef } from "react"
+const SvgComponent = (props, ref) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={37}
-    height={36}
+    width={24}
+    height={24}
     fill="none"
+    ref={ref}
     {...props}
   >
-    <Rect
-      width={36}
-      height={36}
-      x={0.25}
-      fill="#A864FF"
-      fillOpacity={0.2}
-      rx={18}
-    />
     <Path
-      stroke="#904BE8"
+      stroke="#F9671C"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="M14.75 9h-4a1 1 0 0 0-1 1v4M14.75 27h-4a1 1 0 0 1-1-1v-4M22.75 27h4a1 1 0 0 0 1-1v-4M22.75 9h4a1 1 0 0 1 1 1v4M23.75 18h-10M20.25 14h-3M20.25 22h-3"
+      strokeWidth={2}
+      d="M8 3H4a1 1 0 0 0-1 1v4M8 21H4a1 1 0 0 1-1-1v-4M16 21h4a1 1 0 0 0 1-1v-4M16 3h4a1 1 0 0 1 1 1v4M17 12H7M13.5 8h-3M13.5 16h-3"
     />
   </Svg>
 )
-export default SvgComponent
+const ForwardRef = forwardRef(SvgComponent)
+export default ForwardRef

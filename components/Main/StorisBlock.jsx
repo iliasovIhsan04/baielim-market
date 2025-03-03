@@ -80,7 +80,7 @@ export default function StoryComponent() {
       <View style={styles.storiesBlock}>
         <InstaStory
           data={fetchedStories}
-          avatarSize={96}
+          avatarSize={110}
           pressedBorder={10}
           duration={10}
           avatarWrapperStyle={styles.avatar_wrapper}

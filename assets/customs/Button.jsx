@@ -21,7 +21,6 @@ const Button = ({
   children,
 }) => {
   const navigation = useNavigation();
-
   const pathFunction = () => {
     if (path && pathMain) {
       navigation.navigate(pathMain, {
@@ -43,7 +42,7 @@ const Button = ({
             marginBottom: bottom,
             width: "100%",
             height: 50,
-            borderRadius: 10,
+            borderRadius: 50,
             backgroundColor: color,
             alignItems: "center",
             justifyContent: "center",

@@ -5,7 +5,7 @@ export const colors = {
     phon: "#F2F2F2",
     gray: "#9D9D9D",
     red: "#FF0000",
-    feuillet:'#9519AD',
+    feuillet:'#F9671C',
     feuilletOpacity: '#A864FF33',
     green:'#17D31A',
     late:'#FF5DD4' ,
@@ -13,6 +13,5 @@ export const colors = {
     yellow:'#CE8E2B',
     gray80:'#D2D2D2',
     gray3:'#444444',
-
   };
   

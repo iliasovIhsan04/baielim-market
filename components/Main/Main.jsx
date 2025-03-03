@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
-  Image,
   StyleSheet,
   Text,
   View,
@@ -22,34 +21,33 @@ import { fetchUserInfo } from "@/Redux/reducer/UserInfo";
 import StoryComponent from "./StorisBlock";
 import { router, useNavigation } from "expo-router";
 import { useRoute } from "@react-navigation/native";
-import Wrapper from "../../assets/styles/components/Wrapper";
-import Column from "../../assets/styles/components/Column"; 
+import Column from "../../assets/styles/components/Column";
 import { colors } from "@/assets/styles/components/colors";
 import Flex from "../../assets/styles/components/Flex";
 import Scanner from "../../assets/svg/imgScanner";
-import Favorite from "../../assets/svg/favoriteImg";''
+import Favorite from "../../assets/svg/favoriteImg";
 import TextContent from "@/assets/styles/components/TextContent";
 import Wave from "@/assets/styles/components/Wave";
 import { url } from "@/Api";
 import axios from "axios";
 import Button from "@/assets/customs/Button";
 import CartImg from "../../assets/svg/cartimg";
-import { OneSignal } from 'react-native-onesignal'
+import { OneSignal } from "react-native-onesignal";
 
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Main() {
-const [onesignalPush, setOneSignalPush] = useState('')
+  const [onesignalPush, setOneSignalPush] = useState("");
   const dispatch = useDispatch();
   const [modalRegistration, setModalRegistration] = useState(false);
   const scaleValueModal2 = useRef(new Animated.Value(0)).current;
   const opacityValueModal2 = useRef(new Animated.Value(0)).current;
   const [refreshing, setRefreshing] = useState(false);
   const [brendData, setBrendData] = useState([]);
-  const [local, setLocal] = useState(null)
+  const [local, setLocal] = useState(null);
   const [pushToken, setPushToken] = useState(null);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchBrendData = async () => {
@@ -118,7 +116,7 @@ const [onesignalPush, setOneSignalPush] = useState('')
       try {
         const token = await AsyncStorage.getItem("oneSignalPushToken");
         if (token) {
-          setPushToken(token); 
+          setPushToken(token);
         } else {
           console.log("Push token not found.");
         }
@@ -126,14 +124,13 @@ const [onesignalPush, setOneSignalPush] = useState('')
         console.error("Error retrieving push token:", error);
       }
     };
-  
+
     getPushToken();
   }, []);
 
   useEffect(() => {
     const initializeOneSignal = async () => {
       try {
-  
         if (!pushToken) {
           OneSignal.initialize("e71cc0df-2dba-490b-9fec-fe18f9b8ff6e");
           OneSignal.Notifications.requestPermission(true);
@@ -142,39 +139,47 @@ const [onesignalPush, setOneSignalPush] = useState('')
             OneSignal.login(externalId);
           }
           OneSignal.User.pushSubscription.optIn();
-          OneSignal.User.pushSubscription.addEventListener("change", async (subscription) => {
-            const userId = String(subscription?.current?.id);
-            setOneSignalPush(userId);
-            await AsyncStorage.setItem("oneSignalPushToken", userId);
-          });
+          OneSignal.User.pushSubscription.addEventListener(
+            "change",
+            async (subscription) => {
+              const userId = String(subscription?.current?.id);
+              setOneSignalPush(userId);
+              await AsyncStorage.setItem("oneSignalPushToken", userId);
+            }
+          );
         } else {
-          console.log("Пользователь не зарегистрирован, OneSignal не работает.");
+          console.log(
+            "Пользователь не зарегистрирован, OneSignal не работает."
+          );
         }
       } catch (error) {
         console.error("Ошибка инициализации OneSignal:", error);
       }
     };
-  const handleNotificationClick = (event) => {
-    console.log("Push уведомление нажато:", event);
+    const handleNotificationClick = (event) => {
+      console.log("Push уведомление нажато:", event);
 
-    const screen = event?.notification?.additionalData?.screen;
-    if (screen) {
-      console.log("Навигация:", screen);
-      router.push(screen);
-    } else {
-      navigation.navigate("navigate/Notifications");
-    }
-  };
-  initializeOneSignal();
-  OneSignal.Notifications.addEventListener("click", handleNotificationClick);
-  return () => {
-    OneSignal.Notifications.removeEventListener("click", handleNotificationClick);
-  };
-}, [user]);
+      const screen = event?.notification?.additionalData?.screen;
+      if (screen) {
+        console.log("Навигация:", screen);
+        router.push(screen);
+      } else {
+        navigation.navigate("navigate/Notifications");
+      }
+    };
+    initializeOneSignal();
+    OneSignal.Notifications.addEventListener("click", handleNotificationClick);
+    return () => {
+      OneSignal.Notifications.removeEventListener(
+        "click",
+        handleNotificationClick
+      );
+    };
+  }, [user]);
 
-useEffect(() => {
-  AsyncStorage.getItem("tokenActivation").then((token) => setLocal(token));
-}, []);
+  useEffect(() => {
+    AsyncStorage.getItem("tokenActivation").then((token) => setLocal(token));
+  }, []);
 
   const sendTokenToServer = async () => {
     try {
@@ -185,7 +190,7 @@ useEffect(() => {
       const response = await axios.post(
         `${url}/device-token/`,
         {
-          device_token: pushToken, 
+          device_token: pushToken,
         },
         {
           headers: { Authorization: `Token ${local}` },
@@ -256,123 +261,59 @@ useEffect(() => {
         showsHorizontalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            colors={["#9519AD"]}
-            tintColor={"#9519AD"}
+            colors={["#F9671C"]}
+            tintColor={"#F9671C"}
             refreshing={refreshing}
             onRefresh={onRefresh}
           />
         }
       >
-        <StoryComponent />
-        
-        <Text>oneSignl{pushToken}</Text>
-        <Column gap={10} style={{ marginBottom: 50 }}>
-          <Wrapper padding={[20, 24]}>
-            <Column gap={10}>
-              <BonusCart />
-              <View style={styles.apple_check_price}>
-                <Wave
-                  style={styles.apple_box}
-                  handle={() => router.push("(tabs)/catalog")}
-                >
-                  <TextContent
-                    color={colors.black}
-                    fontSize={16}
-                    fontWeight={600}
-                    style={{ width: "60%", paddingTop: 16, paddingLeft: 16 }}
+        <View style={{ backgroundColor: "#FFFFFF" }}>
+          <StoryComponent />
+          <Column gap={10} style={{ marginBottom: 50 }}>
+            <View style={stylesAll.container}>
+              <Column gap={10}>
+                <BonusCart />
+                <View style={styles.apple_check_price}>
+                  <Wave
+                    style={styles.apple_box}
+                    handle={() => router.push("/navigate/ProductGiven")}
                   >
-                    Трендовая косметика в Bella Vita
-                  </TextContent>
-                  <Image
-                    style={styles.image_apple}
-                    source={require("../../assets/images/trend.png")}
-                  />
-                </Wave>
-                <View style={styles.check_price_block}>
-                  <Flex gap={8}>
-                    <Wave
-                      style={styles.check_price_box}
-                      // handle={() => router.push("/navigate/ProductGiven")}
-                      handle={() => sendTokenToServer(pushToken)}
-                    >
-                      <Column gap={6} style={{ alignItems: "center" }}>
-                        <Scanner />
-                        <TextContent
-                          fontSize={11}
-                          fontWeight={500}
-                          color={colors.black}
-                          style={{ textAlign: "center" }}
-                        >
-                          Проверить цену
-                        </TextContent>
-                      </Column>
-                    </Wave>
-                    <Wave
-                      style={styles.check_price_box}
-                      handle={() => router.push("navigate/FeaturedProducts")}
-                    >
-                      <Column gap={6} style={{ alignItems: "center" }}>
-                        <Favorite />
-                        <TextContent
-                          fontSize={11}
-                          fontWeight={500}
-                          color={colors.black}
-                          style={{ textAlign: "center" }}
-                        >
-                          Избранные това
-                        </TextContent>
-                      </Column>
-                    </Wave>
-                  </Flex>
-                  <View style={{ flex: 1 }}>
-                    <Wave handle={() => router.push("navigate/BrendList")}>
-                      <Column style={styles.brend_block}>
-                        <TextContent
-                          fontSize={16}
-                          fontWeight={600}
-                          color={colors.black}
-                        >
-                          Бренды
-                        </TextContent>
-                        <View style={styles.catalog_brend}>
-                          {brendData.slice(0, 4).map((el, id) => (
-                            <View
-                              style={[
-                                styles.brend_box,
-                                { marginLeft: id > 0 ? -14 : 0 },
-                              ]}
-                              key={id}
-                            >
-                              <Image
-                                style={styles.box_img}
-                                source={{ uri: el.img }}
-                              />
-                            </View>
-                          ))}
-                          {brendData.length > 4 && (
-                            <View style={styles.remaining_brend_box}>
-                              <View style={styles.breand_box}>
-                                <TextContent
-                                  fontSize={12}
-                                  fontWeight={500}
-                                  color={colors.white}
-                                >
-                                  +{brendData.length - 4}8
-                                </TextContent>
-                              </View>
-                            </View>
-                          )}
-                        </View>
-                      </Column>
-                    </Wave>
-                  </View>
+                    <Flex gap={10} style={{justifyContent:'center'}}> 
+                      <Scanner />
+                      <TextContent
+                        fontSize={16}
+                        fontWeight={400}
+                        color={colors.black}
+                        style={{ textAlign: "center" }}
+                      >
+                        Проверить цену
+                      </TextContent>
+                    </Flex>
+                  </Wave>
+                  <Wave
+                    style={styles.apple_box}
+                    handle={() => router.push("navigate/FeaturedProducts")}
+                  >
+                    <Flex gap={10} style={{justifyContent:'center'}}> 
+                      <Favorite />
+                      <TextContent
+                        fontSize={16}
+                        fontWeight={400}
+                        color={colors.black}
+                        style={{ textAlign: "center" }}
+                      >
+                        Избранные товаров
+                      </TextContent>
+                    </Flex>
+                  </Wave>
                 </View>
-              </View>
-            </Column>
-          </Wrapper>
-          <HurryUpToBuy />
-          <Promotion />
-        </Column>
+              </Column>
+            </View>
+            <HurryUpToBuy />
+            <Promotion />
+          </Column>
+        </View>
       </ScrollView>
     </>
   );
@@ -469,31 +410,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
   },
-  apple_box: {
-    width: containerWidth,
-    height: 200,
-    borderRadius: 10,
-    backgroundColor: colors.phon,
-    overflow: "hidden",
-  },
   image_apple: {
     width: "100%",
     height: "100%",
     borderRadius: 10,
     bottom: "40%",
   },
-  check_price_block: {
-    width: containerWidth,
-    backgroundColor: colors.white,
-    flexDirection: "column",
-    gap: 8,
-  },
-  check_price_box: {
+  apple_box: {
     flex: 1,
-    height: 96,
-    borderRadius: 14,
+    height: 58,
+    borderRadius: 10,
     paddingHorizontal: 10,
-    paddingVertical: 14,
+    paddingVertical: 10,
     backgroundColor: colors.phon,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

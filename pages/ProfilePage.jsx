@@ -20,7 +20,7 @@ import TextContent from "@/assets/styles/components/TextContent";
 import Arrow from "../assets/svg/more";
 import PurchaseIcon from "../assets/svg/purchaseImg";
 import FaviriteIcon from "../assets/svg/favoriteIcon";
-import NotificationsIcon from "../assets/svg/Notification";
+import CartActive from "../assets/svg/shoppingCartActive";
 import Wave from "@/assets/styles/components/Wave";
 import SettingIcons from "../assets/svg/settingsIcon";
 import MessageIcon from "../assets/svg/mesageIcon";
@@ -249,19 +249,19 @@ const ProfilePage = () => {
                 <Arrow />
               </Between>
             </Wave>
-            <Wave handle={() => router.push("navigate/Notifications")}>
+            <Wave handle={() => router.push("/navigate/BasketPage")}>
               <Between
                 style={[styles.box_prof, styles.border_bot]}
                 center={"center"}
               >
                 <Flex gap={10}>
-                  <NotificationsIcon />
+                <CartActive />
                   <TextContent
                     fontSize={16}
                     fontWeight={500}
                     color={colors.black}
                   >
-                    Уведомления
+                 Корзина
                   </TextContent>
                 </Flex>
                 <Arrow />

@@ -3,12 +3,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import CartActive from "../../assets/svg/shoppingCartActive";
+
 import TextContent from "@/assets/styles/components/TextContent";
 import { colors } from "@/assets/styles/components/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserInfo } from "@/Redux/reducer/UserInfo";
-import Wave from "@/assets/styles/components/TextContent";
+import Wave from "@/assets/styles/components/Wave";
+import NotificationsIcon from "../../assets/svg/Notification";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Header = () => {
       setTokenState(null);
     }
   };
+
   useEffect(() => {
     const loadUserInfo = async () => {
       await getToken();
@@ -35,7 +37,6 @@ const Header = () => {
 
   const data = useSelector((state) => state?.users);
   const user = data?.user;
-
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   useEffect(() => {
@@ -50,12 +51,12 @@ const Header = () => {
     };
     getItems();
   }, []);
+
   return (
     <View
       style={[
         styles.header,
         stylesAll.header_nav,
-        styles.header_gray,
         stylesAll.container,
         { paddingBottom: 18 },
       ]}
@@ -70,15 +71,15 @@ const Header = () => {
         } 
       </TextContent>
       <Wave
-        handle={() => router.push("/navigate/BasketPage")}
+        handle={() => router.push("navigate/Notifications")}
         style={{ position: "relative" }}
       >
-        <CartActive />
-        {totalQuantity > 0 && (
+             <NotificationsIcon />
+        {/* {totalQuantity > 0 && (
           <View style={styles.border_basket_not}>
             <Text style={styles.border_basket_text}>{totalQuantity}</Text>
           </View>
-        )}
+        )} */}
       </Wave>
     </View>
   );
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     width: 18,
     height: 18,
     borderRadius: 50,
-    backgroundColor: "#FF5DD4",
+    backgroundColor: colors.feuillet,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
