@@ -1,0 +1,26 @@
+{
+  "name": "Bella Vita",
+  "displayName": "Bella Vita",
+  "slug": "bella-vita",
+  "icon": "./assets/bella-vita.png",
+  "android": {
+    "package": "com.navisdevs.bellavita",
+    "compileSdkVersion": 34,
+    "targetSdkVersion": 34,
+    "buildToolsVersion": "34.0.0"
+  },
+  "ios": {
+    "bundleIdentifier": "com.navisdevs.bellavita"
+  },
+  "splash": {
+    "image": "./assets/images/bellaSplash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#9519AD"
+  },
+  "version": "1.0.1",
+  "extra": {
+    "eas": {
+      "projectId":"81f038ad-4d5e-4302-bac5-0bac45800826"
+    }
+  }
+}
