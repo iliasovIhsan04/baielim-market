@@ -20,7 +20,7 @@ export default function StoryComponent() {
     let isMounted = true;
     const fetchStories = async () => {
       try {
-        const response = await fetch('https://bella.navisdevs.ru/stories');
+        const response = await fetch('https://bekbekei.store/stories');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const storiesData = await response.json();
         if (!isMounted) return;

@@ -1,1 +1,1 @@
-export const url = "https://bella.navisdevs.ru";
+export const url = "https://bekbekei.store";
