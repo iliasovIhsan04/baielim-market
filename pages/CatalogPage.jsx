@@ -13,20 +13,8 @@ import { url } from "@/Api";
 const containerWidth = (Dimensions.get("window").width - 34) / 3 - 5;
 const CatalogPage = () => {
   const [data, setData] = useState([]);
-  const [brendData, setBrendData] = useState([]);
   const [loading, setLoading] = useState(true);
   const api = url + "/product/categories";
-  useEffect(() => {
-    const fetchBrendData = async () => {
-      try {
-        const response = await axios.get(url + "/brand/");
-        setBrendData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchBrendData();
-  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -45,7 +33,6 @@ const CatalogPage = () => {
   if (loading) {
     return <Loading />;
   }
-
   if (data.length === 0) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -53,7 +40,6 @@ const CatalogPage = () => {
       </View>
     );
   }
-
   return (
     <View style={{flex:1}}>
       <Header container={true}>Каталог</Header>
@@ -62,36 +48,6 @@ const CatalogPage = () => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.shop_block}>
-          <Wave style={styles.brend_block} handle={() => router.push('navigate/BrendList')}>
-            <View style={styles.block_brend}>
-              <TextContent fontSize={13} fontWeight={500}>
-                Бренды
-              </TextContent>
-              <View style={styles.catalog_brend}>
-                {brendData.slice(0, 4).map((el, id) => (
-                  <View
-                    style={[styles.brend_box, { marginLeft: id > 0 ? -16 : 0 }]}
-                    key={id}
-                  >
-                    <Image style={styles.box_img} source={{ uri: el.img }} />
-                  </View>
-                ))}
-                {brendData.length > 4 && (
-                  <View style={styles.remaining_brend_box}>
-                    <View style={styles.breand_box}>
-                      <TextContent
-                        fontSize={12}
-                        fontWeight={500}
-                        color={colors.white}
-                      >
-                        +{brendData.length - 4}
-                      </TextContent>
-                    </View>
-                  </View>
-                )}
-              </View>
-            </View>
-          </Wave>
           {data.map((item, id) => (
             <Wave
               handle={() => router.push(`/details/CategoryId/${item.id}`)}

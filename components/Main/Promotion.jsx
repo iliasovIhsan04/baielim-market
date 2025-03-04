@@ -21,7 +21,7 @@ const Promotion = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${url}/card/type/two`);
+        const response = await axios.get(`${url}/card/type/one`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -39,7 +39,7 @@ const Promotion = () => {
           paddingHorizontal:16
         }}
       >
-        <TextContent fontSize={20} fontWeight={600} color={colors.black}>Акции</TextContent>
+        <TextContent fontSize={20} fontWeight={600} color={colors.black}>Успей купить</TextContent>
         <Wave
           style={{ flexDirection: "row", alignItems: "center" }}
           handle={() => router.push("/navigate/PromotionDetails")}
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
     borderRadius:16
   },
   promotion_box: {
-    width: 330,
-    height: 140,
-    borderRadius: 16,
+    width: 260,
+    height: 260,
+    borderRadius: 20,
     backgroundColor: colors.phon,
   },
 });

@@ -11,6 +11,7 @@ import Back from "../../../assets/svg/backWhite";
 import Wave from "@/assets/styles/components/Wave";
 import { router } from "expo-router";
 import { ScrollView } from "react-native";
+import { url } from "@/Api";
 
 const PromotionDetailId = () => {
   const [harryId, setHarryId] = useState([]);
@@ -21,7 +22,7 @@ const PromotionDetailId = () => {
       const fetchUserData = async () => {
         try {
           const response = await axios.get(
-            `https://bella.navisdevs.ru/card/${id}`
+            url + `/card/${id}`
           );
           setHarryId(response.data);
         } catch (error) {
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: "#FF5DD4",
+    backgroundColor: colors.feuillet,
   },
   promotion_block: {
     flexDirection: "column",

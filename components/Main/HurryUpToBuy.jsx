@@ -1,25 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
-import Wave from '../../assets/styles/components/Wave'
-import Morees from "../../assets/svg/more";
+import { View, StyleSheet, ScrollView, Image } from "react-native";
+import Wave from "../../assets/styles/components/Wave";
 import { router, useFocusEffect } from "expo-router";
-import Wrapper from '../../assets/styles/components/Wrapper';
 import TextContent from "@/assets/styles/components/TextContent";
 import { colors } from "@/assets/styles/components/colors";
-import Flex from "@/assets/styles/components/Flex";
-import Card from "@/assets/customs/Card";
 import { url } from "@/Api";
-import { useCondition} from "@/context/FavoriteContext";
+import { useCondition } from "@/context/FavoriteContext";
 
 const HurryUpToBuy = () => {
-  const {favoriteHarry, setFavoriteHarry, favoriteProductId, setFavoriteProductId, favoriteItemsLocal, setFavoriteItemsLocal} = useCondition()
+  const {
+    favoriteHarry,
+    setFavoriteHarry,
+    favoriteProductId,
+    setFavoriteProductId,
+    favoriteItemsLocal,
+    setFavoriteItemsLocal,
+  } = useCondition();
   const [data, setData] = useState([]);
-  const api = url+`/product/list`
+  const api = url + `/card/type/top`;
   const [loading, setLoading] = useState(false);
   const fetchUserData = async () => {
     setLoading(true);
@@ -32,66 +31,75 @@ const HurryUpToBuy = () => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
-    fetchUserData(); 
+    fetchUserData();
   }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       if (favoriteHarry || favoriteProductId || favoriteItemsLocal) {
-        fetchUserData(); 
+        fetchUserData();
         setFavoriteHarry(false);
         setFavoriteProductId(false);
-        setFavoriteItemsLocal(false)
+        setFavoriteItemsLocal(false);
       }
-    }, [favoriteHarry, favoriteProductId ,favoriteItemsLocal])
+    }, [favoriteHarry, favoriteProductId, favoriteItemsLocal])
   );
 
   return (
-    <Wrapper padding={[20, 24]}>
+    <View style={{ marginTop: 30 }}>
       {loading ? (
         <TextContent>Loading...</TextContent>
       ) : (
         <>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
               marginBottom: 10,
+              paddingHorizontal: 16,
             }}
           >
-            <TextContent fontSize={20} fontWeight={600} color={colors.black}>Успей купить</TextContent>
-            <Wave
-              handle={() => router.push("/navigate/HarryBuyDetails")}
-            >
-              <Flex>
-              <TextContent fontSize={16} fontFamily={400} color={colors.black}>Все</TextContent>
-              <Morees />
-              </Flex>
-            </Wave>
+            <TextContent fontSize={20} fontWeight={600} color={colors.black}>
+              Топ продажа
+            </TextContent>
           </View>
           <ScrollView
+            horizontal={true}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
           >
-            <View style={{ gap: 8,flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between",}}>
-              {data.map((item) => ( 
+            <View
+              style={{
+                gap: 8,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginHorizontal: 16,
+              }}
+            >
+              {data.map((item) => (
                 <>
-                {
-                  item.is_popular && (
-                    <Card id={item.id} title={item.title} percentage={item.discount_percentage} mini_description={item.description} price={item.price} old_price={item.discount_price} harry={data} love={true} newBlock={item.new} img={item.img[0].img}  handle={() => router.push(`/details/ProductId/${item.id}`)}/>
-                  )
-                }
+                  <Wave handle={() => router.push(`/details/PromotionId/${item.id}`)}>
+                      <Image
+                        style={styles.list_img}
+                        source={{ uri: item.img }}
+                      />
+                  </Wave>
                 </>
               ))}
             </View>
           </ScrollView>
         </>
       )}
-    </Wrapper>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  list_img: {
+    width: 328,
+    height: 150,
+    borderRadius: 10,
+  },
+});
 
 export default HurryUpToBuy;

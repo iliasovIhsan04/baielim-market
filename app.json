@@ -2,7 +2,7 @@
   "name": "Bella Vita",
   "displayName": "Bella Vita",
   "slug": "bella-vita",
-  "icon": "./assets/bella-vita.png",
+  // "icon": "./assets/bella-vita.png",
   "android": {
     "package": "com.navisdevs.bellavita",
     "compileSdkVersion": 34,

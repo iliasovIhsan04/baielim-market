@@ -20,7 +20,7 @@ const PromotionDetails = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `${url}/card/type/two`
+          `${url}/card/type/one`
         );
         setHarry(response.data);
       } catch (error) {
