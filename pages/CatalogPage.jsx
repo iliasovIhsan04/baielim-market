@@ -30,6 +30,7 @@ const CatalogPage = () => {
     fetchUserData();
   }, []);
 
+
   if (loading) {
     return <Loading />;
   }
@@ -42,7 +43,7 @@ const CatalogPage = () => {
   }
   return (
     <View style={{flex:1}}>
-      <Header container={true}>Каталог</Header>
+      <Header container={true}>Каталоuu</Header>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
