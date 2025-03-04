@@ -44,22 +44,9 @@ export default function Main() {
   const scaleValueModal2 = useRef(new Animated.Value(0)).current;
   const opacityValueModal2 = useRef(new Animated.Value(0)).current;
   const [refreshing, setRefreshing] = useState(false);
-  const [brendData, setBrendData] = useState([]);
   const [local, setLocal] = useState(null);
   const [pushToken, setPushToken] = useState(null);
   const navigation = useNavigation();
-
-  useEffect(() => {
-    const fetchBrendData = async () => {
-      try {
-        const response = await axios.get(url + "/brand/");
-        setBrendData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchBrendData();
-  }, []);
 
   const route = useRoute();
   const { showModal } = route.params || {};

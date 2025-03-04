@@ -7,6 +7,7 @@ import Between from "../../assets/styles/components/Between"
 import TextContent from "@/assets/styles/components/TextContent";
 import { colors } from "@/assets/styles/components/colors";
 import { router, } from "expo-router";
+import NotificationsIcon from "../../assets/svg/Notification";
 
 const Header = ({
   iks,
@@ -15,7 +16,9 @@ const Header = ({
   children,
   style,
   reset,
-  handleBack
+  handleBack,
+  notification,
+  empty
 }) => { 
     return (
     <View
@@ -39,6 +42,11 @@ const Header = ({
           }}
           gap={20}
         >
+          {
+            empty && (
+              <View style={{width:24, height:24}}></View>
+            )
+          }
           {back  && (
             <Wave handle={() => router.back() }>
               <BackLeft />
@@ -54,6 +62,7 @@ const Header = ({
           <TextContent
             style={{
               flex: 1,
+              textAlign:"center"
             }}
             numberOfLines={1}
             fontSize={22}
@@ -79,6 +88,16 @@ const Header = ({
             </TextContent>
           </Wave>
         )}
+        {
+          notification && (
+            <Wave
+            handle={() => router.push("navigate/Notifications")}
+            style={{ position: "relative" }}
+          >
+                 <NotificationsIcon />
+          </Wave>
+          )
+        }
       </Between>
     </View>
   );
