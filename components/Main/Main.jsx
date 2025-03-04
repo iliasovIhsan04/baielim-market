@@ -303,7 +303,8 @@ export default function Main() {
                         color={colors.black}
                         style={{ textAlign: "center" }}
                       >
-                        Избранные товаров
+                        Избранные товара
+
                       </TextContent>
                     </Flex>
                   </Wave>
