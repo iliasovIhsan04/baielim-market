@@ -28,45 +28,68 @@ import Back from "../../assets/svg/moreLeft";
 import Column from "@/assets/styles/components/Column";
 import Search from "../../assets/svg/search";
 import Loading from "@/assets/ui/Loading";
-const CatalogDetails = ({}) => {
+
+const CatalogDetails = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState("");
   const [isDataAvailable, setIsDataAvailable] = useState(true);
   const [modal, setModal] = useState(false);
   const [modalFilter, setModalFilter] = useState(false);
-  const [rangeValue, setRangeValue] = useState([0, 50000]);
+  const [rangeValue, setRangeValue] = useState([0, 50000]); // Баштапкы диапазон
+  const [appliedRange, setAppliedRange] = useState(null); // Колдонулган фильтр диапазону
   const screenWidth = Dimensions.get("window").width;
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(50000);
   const [ordering, setOrdering] = useState("");
+  const [subCat, setSubCat] = useState(null);
+  const [tabs, setTabs] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const route = useRoute();
-  const { cat } = route.params || {};
+  const { cat = "all" } = route.params || {};
+
   const fetchData = async (
-    min = minPrice,
-    max = maxPrice,
-    order = ordering
+    min = null, // Фильтрсиз режими үчүн null
+    max = null, // Фильтрсиз режими үчүн null
+    order = ordering,
+    subCategory = subCat
   ) => {
     try {
       setLoading(true);
-      const isBrand = typeof cat === "string" && cat.startsWith("brand_");
-      const query = isBrand
-        ? `${url}/product/list?brand=${cat.replace("brand_", "")}&pricefrom=${min}&priceto=${max}&ordering=${order}`
-        : cat === "all" 
-          ? `${url}/product/list?pricefrom=${min}&priceto=${max}&ordering=${order}` 
-          : `${url}/product/list?sub_cat=${cat}&pricefrom=${min}&priceto=${max}&ordering=${order}`;
+      let query;
+      if (subCategory) {
+        query = `${url}/product/list?sub_cat=${subCategory}`;
+      } else {
+        query = `${url}/product/list?cat=${cat}`;
+      }
+      if (min !== null && max !== null) {
+        query += `&pricefrom=${min}&priceto=${max}`;
+      }
+      if (order) {
+        query += `&ordering=${order}`;
+      }
+      console.log("API Query:", query); 
       const response = await axios.get(query);
       const fetchedData = response.data;
       setData(fetchedData);
       setIsDataAvailable(fetchedData.length > 0);
-      if (fetchedData.length > 0 && min === minPrice && max === maxPrice) {
+
+      if (fetchedData.length > 0) {
         const prices = fetchedData.map((product) => product.price);
         const newMinPrice = Math.min(...prices);
         const newMaxPrice = Math.max(...prices);
-
         setMinPrice(newMinPrice);
         setMaxPrice(newMaxPrice);
-        setRangeValue([newMinPrice, newMaxPrice]);
+
+        if (!appliedRange) {
+          setRangeValue([newMinPrice, newMaxPrice]);
+        }
+      } else {
+        setMinPrice(0);
+        setMaxPrice(50000);
+        if (!appliedRange) {
+          setRangeValue([0, 50000]);
+        }
       }
     } catch (error) {
       console.error("Ошибка при получении данных:", error);
@@ -76,23 +99,55 @@ const CatalogDetails = ({}) => {
       setModalFilter(false);
     }
   };
+
+  useEffect(() => {
+    fetchData(null, null, ordering, subCat);
+  }, [cat, subCat, ordering]);
+
   const applyFilter = () => {
-    setModalFilter(false);
-    fetchData(rangeValue[0], rangeValue[1]);
+    setAppliedRange(rangeValue);
+    fetchData(rangeValue[0], rangeValue[1], ordering, subCat);
   };
-  const handleOrdering = async (newOrder) => {
-    setModal(false);
+
+  const handleOrdering = (newOrder) => {
     setOrdering(newOrder);
-    fetchData(rangeValue[0], rangeValue[1], newOrder);
+    fetchData(appliedRange ? appliedRange[0] : null, appliedRange ? appliedRange[1] : null, newOrder, subCat);
+  };
+
+  const handleCategorySelection = () => {
+    setSubCat(null);
+    setSelectedIndex(-1);
+    setAppliedRange(null);
+    fetchData(null, null, ordering, null);
+  };
+
+  const handleTabClick = (selectedId) => {
+    setSubCat(selectedId);
+    setSelectedIndex(selectedId);
+    setAppliedRange(null); 
+    fetchData(null, null, ordering, selectedId);
+  };
+
+  const fetchSubCategories = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${url}/product/sub-categories/${cat}`);
+      setTabs(response.data);
+    } catch (error) {
+      console.error("Ошибка при получении субкатегорий:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchData(minPrice, maxPrice, ordering);
-  }, [cat, ordering]);
+    fetchSubCategories();
+  }, [cat]);
 
   if (loading) {
     return <Loading />;
   }
+
   return (
     <View style={[stylesAll.container, styles.block_cat]}>
       <View style={[stylesAll.header, styles.header_search]}>
@@ -109,6 +164,43 @@ const CatalogDetails = ({}) => {
           />
         </View>
       </View>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        horizontal={true}
+      >
+        <View style={styles.catalog_tab_block}>
+          <TouchableOpacity
+            style={[styles.tab, selectedIndex === -1 && styles.activeTab]}
+            onPress={handleCategorySelection}
+          >
+            <Text
+              style={[
+                styles.tab_text,
+                selectedIndex === -1 && styles.tab_text_active,
+              ]}
+            >
+              Все
+            </Text>
+          </TouchableOpacity>
+          {tabs.map((tab) => (
+            <TouchableOpacity
+              key={tab.id}
+              style={[styles.tab, selectedIndex === tab.id && styles.activeTab]}
+              onPress={() => handleTabClick(tab.id)}
+            >
+              <Text
+                style={[
+                  styles.tab_text,
+                  selectedIndex === tab.id && styles.tab_text_active,
+                ]}
+              >
+                {tab.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -267,16 +359,15 @@ const CatalogDetails = ({}) => {
           </ModalDown>
           <View style={{ width: "100%" }}>
             <Column gap={20} style={{ marginTop: 20 }}>
-              {Array.isArray(data) &&
-                data.length > 0 && (
-                  <TextContent
-                    fontSize={22}
-                    fontWeight={600}
-                    color={colors.black}
-                  >
-                    {cat === 'all' ? 'Все продукты' : (cat.startsWith("brand_") ? data[0].brand_name : data[0].subcat_name)}
-                  </TextContent>
-                )}
+              {Array.isArray(data) && data.length > 0 && (
+                <TextContent
+                  fontSize={22}
+                  fontWeight={600}
+                  color={colors.black}
+                >
+                  {subCat ? data[0].subcat_name : "Все продукты"}
+                </TextContent>
+              )}
               <Between center={"center"}>
                 <Wave handle={() => setModal(true)}>
                   <SortIcons />
@@ -295,7 +386,9 @@ const CatalogDetails = ({}) => {
             </Column>
           </View>
         </View>
-        {data.length === 0 ? (
+        {data === null ? (
+          <Loading />
+        ) : data.length === 0 ? (
           <View style={styles.null_product_block}>
             <Text style={stylesAll.barrcode_page_text}>Нет товара!</Text>
           </View>
@@ -320,7 +413,7 @@ const CatalogDetails = ({}) => {
                   newBlock={el.new}
                   data={data}
                   love={true}
-                  img={el.img[0].img}
+                  img={el.img}
                 />
               ))}
           </View>
@@ -331,6 +424,48 @@ const CatalogDetails = ({}) => {
 };
 
 const styles = StyleSheet.create({
+  catalog_tab_block: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  tab: {
+    backgroundColor: "#EAEAEA",
+    height: 36,
+    borderRadius: 50,
+    paddingHorizontal: 18,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  activeTab: {
+    backgroundColor: colors.feuillet,
+    height: 36,
+    borderRadius: 50,
+    paddingHorizontal: 18,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tab_text: {
+    color: "#191919",
+    fontSize: 14,
+    fontWeight: "400",
+  },
+  tab_text_active: {
+    fontSize: 14,
+    fontWeight: "400",
+    color: "#FFFFFF",
+  },
+  sub_cat_box: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    height: 36,
+    backgroundColor: colors.phon,
+    borderRadius: 50,
+  },
+  modal: {},
   null_product_block: {
     width: "100%",
     height: 600,

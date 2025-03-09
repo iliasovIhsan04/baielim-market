@@ -147,6 +147,7 @@ const Productid = () => {
     }
     setFavoriteItems(updatedFavorites);
   };
+
   return (
     <ButtonLayouts
       title={isInBasket ? "В корзине" : "Добавить в корзину"}
@@ -176,7 +177,7 @@ const Productid = () => {
             </Wave>
           </View>
         </View>
-        <Images data={data?.img} newBlock={data.new} percentage={data.discount_percentage}/>
+        {/* <Images data={data?.img} newBlock={data.new} percentage={data.discount_percentage}/> */}
         <View style={[stylesAll.container]}>
           <Column>
             <Column gap={40} top={16}>

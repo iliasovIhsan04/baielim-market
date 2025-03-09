@@ -14,7 +14,6 @@ import Map from '../../assets/svg/map'
 import MapActive from '../../assets/svg/mapActive'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export default function TabLayout() {
   const [storedToken, setStoredToken] = useState(null);
   const navigation = useNavigation(); 
@@ -28,21 +27,24 @@ export default function TabLayout() {
   return (
 <Tabs
   screenOptions={{
-    tabBarActiveTintColor:colors.feuillet, 
+    tabBarActiveTintColor: colors.feuillet,
     tabBarInactiveTintColor: colors.gray,
     headerShown: false,
     tabBarStyle: {
       ...(Platform.OS === "android" && {
-        height: 60, 
+        height: 50,
       }),
     },
     tabBarLabelStyle: {
       fontSize: 11,
-      fontWeight: "500", 
+      fontWeight: "500",
+    },
+    tabBarIconStyle: {
+      marginBottom: -5, 
     },
   }}
 >
-      <Tabs.Screen
+  <Tabs.Screen
         name="index"
         options={{
           title: "Главная",

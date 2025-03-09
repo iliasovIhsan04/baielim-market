@@ -163,7 +163,7 @@ const Card = ({
         <View style={styles.img_block}>
           <Image style={styles.img_box} source={{ uri: img }} />
           <Flex gap={2}>
-            {newBlock && (
+            {/* {newBlock && (
               <View style={styles.new_block}>
                 <TextContent
                   fontSize={10}
@@ -173,12 +173,12 @@ const Card = ({
                   NEW
                 </TextContent>
               </View>
-            )}
-            <View style={[styles.new_block, styles.present_box]}>
+            )} */}
+            {/* <View style={[styles.new_block, styles.present_box]}>
               <TextContent fontSize={10} fontWeight={400} color={colors.white}>
                 {percentage}%
               </TextContent>
-            </View>
+            </View> */}
           </Flex>
           {love && (
             <Wave

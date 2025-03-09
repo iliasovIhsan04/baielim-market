@@ -98,7 +98,7 @@ export const stylesAll = StyleSheet.create({
     justifyContent: "center",
   },
   barrcode_page_text: {
-    color: "#9519AD",
+    color: colors.feuillet,
     fontSize: 24,
     fontWeight: "600",
   },

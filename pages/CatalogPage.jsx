@@ -78,7 +78,7 @@ const CatalogPage = () => {
         <View style={styles.shop_block}>
           {filteredData.map((item, id) => (
             <Wave
-              handle={() => router.push(`/details/CategoryId/${item.id}`)}
+              handle={() => router.push(`details/${item.id}`)}
               key={item.id}
             >
               <View
@@ -126,35 +126,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 50,
-  },
-  brend_box: {
-    position: "relative",
-    width: 34,
-    height: 34,
-    borderRadius: 50,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 2,
-    backgroundColor: colors.white,
-  },
-  block_brend: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    height: "100%",
-  },
-  catalog_brend: {
-    width: "100%",
-    height: 34,
-    flexDirection: "row",
-  },
-  brend_block: {
-    width: "66%",
-    height: 104,
-    backgroundColor: colors.feuilletOpacity,
-    borderRadius: 14,
-    padding: 10,
   },
   shop_block: {
     flex: 1,

@@ -135,9 +135,7 @@ export default function Main() {
             }
           );
         } else {
-          console.log(
-            "Пользователь не зарегистрирован, OneSignal не работает."
-          );
+        ;
         }
       } catch (error) {
         console.error("Ошибка инициализации OneSignal:", error);
