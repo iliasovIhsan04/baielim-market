@@ -82,7 +82,7 @@ const FeaturedProducts = () => {
                   <View style={styles.img_block}>
                     <Image
                       style={styles.img_box}
-                      source={{ uri: el.preview_img }}
+                      source={{ uri: el.img }}
                     />
                     <Flex gap={2}>
                       {el.new && (
@@ -96,7 +96,7 @@ const FeaturedProducts = () => {
                           </TextContent>
                         </View>
                       )}
-                      {
+                      {/* {
                         el.discount_percentage && (
                           <View style={[styles.new_block, styles.present_box]}>
                           <TextContent
@@ -108,7 +108,7 @@ const FeaturedProducts = () => {
                           </TextContent>
                         </View>
                         )
-                      }
+                      } */}
                     </Flex>
                     <Wave
                       style={styles.favorite_box}
@@ -116,7 +116,7 @@ const FeaturedProducts = () => {
                     >
                       <FavoriteActive />
                     </Wave>
-                    <Wave style={styles.cart_box}>
+                    <Wave style={styles.cart_box} >
                       <Shopping />
                     </Wave>
                   </View>
@@ -131,7 +131,7 @@ const FeaturedProducts = () => {
                       >
                         {el.title}
                       </TextContent>
-                      <TextContent
+                      {/* <TextContent
                         fontSize={13}
                         fontWeight={400}
                         color={colors.gray}
@@ -139,17 +139,17 @@ const FeaturedProducts = () => {
                         style={{ minHeight: 33 }}
                       >
                         {el.description}
-                      </TextContent>
+                      </TextContent> */}
                     </Column>
                     <Flex gap={10}>
                       <TextContent
-                        fontSize={15}
-                        fontWeight={600}
+                        fontSize={16}
+                        fontWeight={700}
                         color={colors.black}
                       >
                         {el.price} сом
                       </TextContent>
-                      {el.discount_price && (
+                      {/* {el.discount_price && (
                         <View style={{ position: "relative" }}>
                           <TextContent
                             fontSize={14}
@@ -160,7 +160,7 @@ const FeaturedProducts = () => {
                           </TextContent>
                           <View style={styles.line_price}></View>
                         </View>
-                      )}
+                      )} */}
                     </Flex>
                   </Column>
                 </Column>

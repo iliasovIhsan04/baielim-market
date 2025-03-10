@@ -144,7 +144,6 @@ const MyDetails = () => {
     setIsModified(true);
     setChangeFirst(true); 
   };
-
   const createPerson = async () => {
     if (local) {
       setLoading(true);
@@ -172,7 +171,6 @@ const MyDetails = () => {
         setLoading(false);
         if (response.data.response === true) {
           setIsModified(false);
-
           Alert.alert("Успешно изменён!");
         } else {
           Alert.alert("Ошибка", "Не удалось сохранить изменения.");
@@ -410,7 +408,7 @@ const MyDetails = () => {
             >
               <Text style={styles.switch_text}>Наличие домашних животных</Text>
               <Switch
-                trackColor={{ false: "#3e3e3e", true: "#9519AD" }}
+                trackColor={{ false: "#3e3e3e", true: "#F9671C" }}
                 value={info.car}
                 onValueChange={(value) => {
                   setInfo((prev) => ({ ...prev, car: value }));
@@ -432,7 +430,7 @@ const MyDetails = () => {
             >
               <Text style={styles.switch_text}>Наличие автомобиля</Text>
               <Switch
-                trackColor={{ false: "#3e3e3e", true: "#9519AD" }}
+                trackColor={{ false: "#3e3e3e", true: "#F9671C" }}
                 value={info.animal}
                 onValueChange={(value) => {
                   setInfo((prev) => ({ ...prev, animal: value }));

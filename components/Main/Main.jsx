@@ -262,33 +262,33 @@ export default function Main() {
                 <View style={styles.apple_check_price}>
                   <Wave
                     style={styles.apple_box}
-                    handle={() => router.push("/navigate/ProductGiven")}
-                  >
-                    <Flex gap={10} style={{ justifyContent: "center" }}>
-                      <CartActive />
-                      <TextContent
-                        fontSize={16}
-                        fontWeight={600}
-                        color={colors.black}
-                        style={{ textAlign: "center" }}
-                      >
-                        Корзина
-                      </TextContent>
-                    </Flex>
-                  </Wave>
-                  <Wave
-                    style={styles.apple_box}
                     handle={() => router.push("navigate/FeaturedProducts")}
                   >
                     <Flex gap={10} style={{ justifyContent: "center" }}>
                       <Favorite />
                       <TextContent
                         fontSize={16}
-                        fontWeight={600}
+                        fontWeight={700}
                         color={colors.black}
                         style={{ textAlign: "center", width: 100 }}
                       >
                         Избранные товары
+                      </TextContent>
+                    </Flex>
+                  </Wave>
+                  <Wave
+                    style={styles.apple_box}
+                    handle={() => router.push("/navigate/ProductGiven")}
+                  >
+                    <Flex gap={10} style={{ justifyContent: "center" }}>
+                      <CartActive />
+                      <TextContent
+                        fontSize={16}
+                        fontWeight={700}
+                        color={colors.black}
+                        style={{ textAlign: "center" }}
+                      >
+                        Корзина
                       </TextContent>
                     </Flex>
                   </Wave>
