@@ -33,6 +33,7 @@ import axios from "axios";
 import Button from "@/assets/customs/Button";
 import CartImg from "../../assets/svg/cartimg";
 import { OneSignal } from "react-native-onesignal";
+import CartActive from "../../assets/svg/shoppingCartActive";
 
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -135,7 +136,6 @@ export default function Main() {
             }
           );
         } else {
-        ;
         }
       } catch (error) {
         console.error("Ошибка инициализации OneSignal:", error);
@@ -264,15 +264,15 @@ export default function Main() {
                     style={styles.apple_box}
                     handle={() => router.push("/navigate/ProductGiven")}
                   >
-                    <Flex gap={10} style={{justifyContent:'center'}}> 
-                      <Scanner />
+                    <Flex gap={10} style={{ justifyContent: "center" }}>
+                      <CartActive />
                       <TextContent
                         fontSize={16}
-                        fontWeight={400}
+                        fontWeight={600}
                         color={colors.black}
                         style={{ textAlign: "center" }}
                       >
-                        Проверить цену
+                        Корзина
                       </TextContent>
                     </Flex>
                   </Wave>
@@ -280,16 +280,15 @@ export default function Main() {
                     style={styles.apple_box}
                     handle={() => router.push("navigate/FeaturedProducts")}
                   >
-                    <Flex gap={10} style={{justifyContent:'center'}}> 
+                    <Flex gap={10} style={{ justifyContent: "center" }}>
                       <Favorite />
                       <TextContent
                         fontSize={16}
-                        fontWeight={400}
+                        fontWeight={600}
                         color={colors.black}
-                        style={{ textAlign: "center" }}
+                        style={{ textAlign: "center", width: 100 }}
                       >
-                        Избранные товара
-
+                        Избранные товары
                       </TextContent>
                     </Flex>
                   </Wave>

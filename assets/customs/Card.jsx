@@ -227,7 +227,7 @@ const Card = ({
             >
               {title}
             </TextContent>
-            <TextContent
+            {/* <TextContent
               fontSize={13}
               fontWeight={400}
               color={colors.gray}
@@ -235,13 +235,13 @@ const Card = ({
               style={{ minHeight: 33 }}
             >
               {mini_description}
-            </TextContent>
+            </TextContent> */}
           </Column>
           <Flex gap={10}>
-            <TextContent fontSize={15} fontWeight={600} color={colors.black}>
+            <TextContent fontSize={16} fontWeight={700} color={colors.black}>
               {price} сом
             </TextContent>
-            {old_price && (
+            {/* {old_price && (
               <View style={{ position: "relative" }}>
                 <TextContent
                   fontSize={14}
@@ -252,7 +252,7 @@ const Card = ({
                 </TextContent>
                 <View style={styles.line_price}></View>
               </View>
-            )}
+            )} */}
           </Flex>
         </Column>
       </Column>

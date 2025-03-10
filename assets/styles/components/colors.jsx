@@ -6,7 +6,7 @@ export const colors = {
     gray: "#9D9D9D",
     red: "#FF0000",
     feuillet:'#F9671C',
-    feuilletOpacity: '#A864FF33',
+    feuilletOpacity:'#F9671C33',
     green:'#17D31A',
     late:'#FF5DD4' ,
     gray2:'#AAAAAA',

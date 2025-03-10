@@ -41,9 +41,9 @@ const BonusCart = () => {
       {token && user ? (
         <Pressable onPress={() => router.push("/(tabs)/qrCode")}>
           <View style={styles.bonus_block}>
-            <View style={styles.mini_logo}>
+            {/* <View style={styles.mini_logo}>
               <LogoMini />
-            </View>
+            </View> */}
             <Column gap={2} style={{ marginLeft: 10 }}>
               <TextContent fontSize={28} fontWeight={600} color={colors.white}>
                 {user.bonus}

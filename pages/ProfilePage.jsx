@@ -225,7 +225,7 @@ const ProfilePage = () => {
                     fontWeight={500}
                     color={colors.black}
                   >
-                    История покупок
+                    Мои заказы
                   </TextContent>
                 </Flex>
                 <Arrow />
@@ -261,7 +261,7 @@ const ProfilePage = () => {
                     fontWeight={500}
                     color={colors.black}
                   >
-                 Корзина
+                  Корзина
                   </TextContent>
                 </Flex>
                 <Arrow />

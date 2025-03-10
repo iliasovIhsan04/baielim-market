@@ -169,7 +169,7 @@ const BasketProducts = () => {
                       <View style={styles.product_image_block}>
                           <Image
                             style={styles.product_image}
-                            source={{ uri: item?.img[0]?.img
+                            source={{ uri: item?.img
                              }}
                           />
                       </View>

@@ -48,7 +48,7 @@ const QrCode = () => {
                 { textAlign: "center", flexDirection: "column" },
               ]}
             >
-              Ваша карта «Bella Vita»
+              Ваша карта «Бай Элим»
             </Text>
             <Text style={styles.qr_code_id}>{user?.bonus_id}</Text>
           </View>

@@ -201,10 +201,7 @@ const CatalogDetails = () => {
           ))}
         </View>
       </ScrollView>
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
+  
         <View style={styles.sort_filter_block}>
           <ModalDown modal={modal} setModal={setModal}>
             <TextContent
@@ -357,7 +354,7 @@ const CatalogDetails = () => {
               </View>
             </View>
           </ModalDown>
-          <View style={{ width: "100%" }}>
+          <View style={{ width: "100%", marginBottom:10 }}>
             <Column gap={20} style={{ marginTop: 20 }}>
               {Array.isArray(data) && data.length > 0 && (
                 <TextContent
@@ -386,6 +383,10 @@ const CatalogDetails = () => {
             </Column>
           </View>
         </View>
+        <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         {data === null ? (
           <Loading />
         ) : data.length === 0 ? (
