@@ -372,56 +372,6 @@ const basket_count= basket?.length
           </View>
         </View>
         </ScrollView>
-      {/* <View style={styles.placing_order_bottom}>
-        <View style={{ flexDirection: "column", gap: 10 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={styles.placing_price_name}>Сумма:</Text>
-            <Text style={styles.placing_price_result}>{totalPrice} сом</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={styles.placing_price_name}>Доставка:</Text>
-            <Text style={styles.placing_price_result}>0 сом</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              borderTopWidth: 1,
-              borderColor: "#CFCFCF",
-              paddingTop: 10,
-            }}
-          >
-            <Text style={styles.placing_price_name}>Итого:</Text>
-            <Text style={[styles.placing_price_result, styles.total_text]}>
-              {totalPrice} сом
-            </Text>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={[stylesAll.button, styles.btn_placing]}
-          onPress={handleSubmit}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text style={stylesAll.button_text}>Оформить заказ</Text>
-          )}
-        </TouchableOpacity>
-      </View> */}
     </View>
     </ButtonLayouts>
   );

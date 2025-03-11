@@ -278,7 +278,7 @@ export default function Main() {
                   </Wave>
                   <Wave
                     style={styles.apple_box}
-                    handle={() => router.push("/navigate/ProductGiven")}
+                    handle={() => router.push("/navigate/BasketPage")}
                   >
                     <Flex gap={10} style={{ justifyContent: "center" }}>
                       <CartActive />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -17,23 +17,13 @@ import axios from "axios";
 import { url } from "@/Api";
 import { colors } from "@/assets/styles/components/colors";
 import Header from "../../components/Main/HeaderAll";
-import { Dropdown } from "react-native-element-dropdown";
 
 const NewAddress = () => {
   const [address, setAddress] = useState({
-    street: "",
-    number: "",
-    building: "",
-    apartment: "",
-    floor: "",
-    region: {},
+    address:'',
   });
   const [local, setLocal] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [cityValue, setCityValue] = useState(null);
-  const [region, setRegion] = useState([]);
-  const [regionValue, setRegionValue] = useState(null);
-
   React.useEffect(() => {
     AsyncStorage.getItem("tokenActivation").then((token) => setLocal(token));
   }, []);
@@ -50,7 +40,7 @@ const NewAddress = () => {
     axios
       .post(url + "/order/address/add", address, { headers })
       .then((response) => {
-        if (response.data.response === true) {
+        if (response.status === 200 ) {
           setIsLoading(false);
           router.push("/navigate/EmptyAddress");
         }
@@ -60,22 +50,6 @@ const NewAddress = () => {
         setIsLoading(false);
       });
   };
-  useEffect(() => {
-    const fetchUserAddress = async () => {
-      try {
-        const response = await axios.get(url + "/region/");
-        console.log(response.data);
-        const formattedRegions = response.data.map((region) => ({
-          label: region.name,
-          value: region.id,
-        }));
-        setRegion(formattedRegions);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchUserAddress();
-  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -98,88 +72,27 @@ const NewAddress = () => {
               <View style={stylesAll.input_block_all}>
                 <View>
                   <Text style={stylesAll.label}>
-                    Регион <Text style={styles.required}>*</Text>
-                  </Text>
-                  <Dropdown
-                    style={[stylesAll.input, styles.input_box]}
-                    placeholder="Выберите регион"
-                    data={region}
-                    labelField="label"
-                    valueField="value"
-                    value={regionValue}
-                    onChange={(item) => {
-                      setRegionValue(item.value);
-                      handleChange("region", item.value);
-                    }}
-                  />
-                </View>
-                <View>
-                  <Text style={stylesAll.label}>
-                    Улица <Text style={styles.required}>*</Text>
+                    Адрес <Text style={styles.required}>*</Text>
                   </Text>
                   <TextInput
                     placeholder="Введите название улицы"
                     placeholderTextColor={"#AAAAAA"}
                     style={[stylesAll.input, styles.input_box]}
-                    value={address.street}
-                    onChangeText={(value) => handleChange("street", value)}
-                  />
-                </View>
-                <View>
-                  <Text style={stylesAll.label}>
-                    Дом <Text style={styles.required}>*</Text>
-                  </Text>
-                  <TextInput
-                    placeholder="Введите номер дома"
-                    placeholderTextColor={"#AAAAAA"}
-                    style={[stylesAll.input, styles.input_box]}
-                    value={address.number}
-                    onChangeText={(value) => handleChange("number", value)}
-                  />
-                </View>
-                <View>
-                  <Text style={stylesAll.label}>Корпус</Text>
-                  <TextInput
-                    placeholder="Введите номер корпуса"
-                    placeholderTextColor={"#AAAAAA"}
-                    style={[stylesAll.input, styles.input_box]}
-                    value={address.building}
-                    onChangeText={(value) => handleChange("building", value)}
-                  />
-                </View>
-                <View>
-                  <Text style={stylesAll.label}>Подъезд</Text>
-                  <TextInput
-                    placeholder="Введите номер подъезда"
-                    placeholderTextColor={"#AAAAAA"}
-                    style={[stylesAll.input, styles.input_box]}
-                    value={address.apartment}
-                    onChangeText={(value) => handleChange("apartment", value)}
-                  />
-                </View>
-                <View>
-                  <Text style={stylesAll.label}>Этаж</Text>
-                  <TextInput
-                    placeholder="Введите номер этажа"
-                    placeholderTextColor={"#AAAAAA"}
-                    style={[stylesAll.input, styles.input_box]}
-                    value={address.floor}
-                    onChangeText={(value) => handleChange("floor", value)}
+                    value={address.address}
+                    onChangeText={(value) => handleChange("address", value)}
                   />
                 </View>
               </View>
               <TouchableOpacity
                 style={[
                   styles.btn_new_address,
-                  address.street && address.number && address.region
+                 address.address
                     ? styles.btn_active
                     : styles.btn_inactive,
                 ]}
                 onPress={handleSubmit}
                 disabled={
-                  !address.street ||
-                  !address.number ||
-                  !address.region ||
+                  !address.address ||
                   isLoading
                 }
               >

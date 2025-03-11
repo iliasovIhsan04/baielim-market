@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Main/HeaderAll";
 import {
   ActivityIndicator,
+  Alert,
   Dimensions,
   Image,
   ScrollView,
@@ -27,6 +28,7 @@ const FeaturedProducts = () => {
   const [cartFeat, setCartFeat] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isInBasket, setIsInBasket] = useState(false);
 
   useEffect(() => {
     const fetchCartAndFavorites = async () => {
@@ -60,6 +62,48 @@ const FeaturedProducts = () => {
       setLoading(false);
     }
   };
+
+  const Basket = async (id, datas) => {
+    setIsInBasket(true);
+    try {
+      const existingItem = await AsyncStorage.getItem(
+        `activeItemsBasket_${id}`
+      );
+      if (existingItem) {
+        Alert.alert("Уже сохранен", "Этот товар уже добавлен в корзину.");
+        return;
+      }
+      const prevIDString = await AsyncStorage.getItem("plus");
+      const prevID = prevIDString !== null ? JSON.parse(prevIDString) : {};
+      const updatedPrevID = { ...prevID, [id]: 1 };
+      await AsyncStorage.setItem("plus", JSON.stringify(updatedPrevID));
+      await AsyncStorage.setItem("plusOne", JSON.stringify(updatedPrevID));
+      const prevShopCartString = await AsyncStorage.getItem("shopCart");
+      const prevShopCart =
+        prevShopCartString !== null ? JSON.parse(prevShopCartString) : [];
+      const updatedShopCart = [...prevShopCart, datas];
+      await AsyncStorage.setItem("shopCart", JSON.stringify(updatedShopCart));
+      const prevCartsString = await AsyncStorage.getItem("cartsBasket");
+      const prevCarts =
+        prevCartsString !== null ? JSON.parse(prevCartsString) : [];
+      const updatedCarts = [...prevCarts, datas];
+      await AsyncStorage.setItem("cartsBasket", JSON.stringify(updatedCarts));
+      await AsyncStorage.setItem(
+        `activeItemsBasket_${id}`,
+        JSON.stringify(datas)
+      );
+      const activeItem = await AsyncStorage.getItem(`activeItemsBasket_${id}`);
+      if (activeItem) {
+        Alert.alert("Ваш товар успешно добавлен в корзину!");
+      } else {
+        Alert.alert("Ошибка", "Не удалось добавить товар в корзину");
+      }
+    } catch (error) {
+      Alert.alert("Ошибка", "Произошла ошибка при добавлении товара в корзину");
+      console.error(error);
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <Header container={true} back={true}>
@@ -77,13 +121,14 @@ const FeaturedProducts = () => {
         >
           <View style={styles.catalog_block_all}>
             {cartFeat.map((el, id) => (
-              <Wave style={styles.cardContainer} key={id} handle={() => router.push(`/details/ProductId/${el.id}`)}>
+              <Wave
+                style={styles.cardContainer}
+                key={id}
+                handle={() => router.push(`/details/ProductId/${el.id}`)}
+              >
                 <Column gap={10}>
                   <View style={styles.img_block}>
-                    <Image
-                      style={styles.img_box}
-                      source={{ uri: el.img }}
-                    />
+                    <Image style={styles.img_box} source={{ uri: el.img }} />
                     <Flex gap={2}>
                       {el.new && (
                         <View style={styles.new_block}>
@@ -116,7 +161,17 @@ const FeaturedProducts = () => {
                     >
                       <FavoriteActive />
                     </Wave>
-                    <Wave style={styles.cart_box} >
+                    <Wave
+                      style={styles.cart_box}
+                      handle={() => {
+                        const itemToAdd = cartFeat.find((item) => Number(item.id) === Number(el.id));
+                        if (itemToAdd) {
+                          Basket(itemToAdd.id, itemToAdd);
+                        } else {
+                          console.error("Item not found");
+                        }
+                      }}
+                    >
                       <Shopping />
                     </Wave>
                   </View>

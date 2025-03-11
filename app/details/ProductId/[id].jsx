@@ -87,8 +87,6 @@ const Productid = () => {
     checkFavoritesAndBasket();
   }, [id]);
 
-
-
   const Basket = async (id, datas) => {
     setIsInBasket(true);
     try {
@@ -147,7 +145,6 @@ const Productid = () => {
     }
     setFavoriteItems(updatedFavorites);
   };
-
   return (
     <ButtonLayouts
       title={isInBasket ? "В корзине" : "Добавить в корзину"}
@@ -177,14 +174,11 @@ const Productid = () => {
             </Wave>
           </View>
         </View>
-        {/* <Images data={data?.img} newBlock={data.new} percentage={data.discount_percentage}/> */}
+        <Images data={data?.product_img} newBlock={data.new} percentage={data.discount_percentage}/>
         <View style={[stylesAll.container]}>
           <Column>
             <Column gap={40} top={16}>
               <Column gap={6}>
-                <TextContent fontSize={13} fontWeight={400} color={colors.gray}>
-                  ARTDECO
-                </TextContent>
                 <TextContent
                   fontSize={18}
                   fontWeight={600}
@@ -193,7 +187,7 @@ const Productid = () => {
                   {data?.title}
                 </TextContent>
               </Column>
-              <Column gap={24}>
+              <Column gap={20}>
                 <Flex gap={16}>
                   <Column gap={4}>
                     <TextContent
@@ -203,13 +197,6 @@ const Productid = () => {
                     >
                       {data.price} сом
                     </TextContent>
-                    <TextContent
-                      fontSize={13}
-                      fontWeight={400}
-                      color={colors.yellow}
-                    >
-                      со скидкой
-                    </TextContent>
                   </Column>
                   <Column gap={4}>
                     <TextContent
@@ -218,13 +205,6 @@ const Productid = () => {
                       color={colors.gray80}
                     >
                       {data?.discount_price}
-                    </TextContent>
-                    <TextContent
-                      fontSize={13}
-                      fontWeight={400}
-                      color={colors.gray80}
-                    >
-                      без скидок
                     </TextContent>
                   </Column>
                 </Flex>

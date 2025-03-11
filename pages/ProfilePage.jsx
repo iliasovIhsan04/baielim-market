@@ -1,12 +1,7 @@
 import { stylesAll } from "@/style";
 import { router, useFocusEffect } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ModalDown from "@/Modal";
@@ -28,6 +23,7 @@ import ApplicationIcon from "../assets/svg/applicationImg";
 import LogoutIcon from "../assets/svg/logout";
 import DashboardIcon from "../assets/svg/dashboardIcon";
 import Button from "@/assets/customs/Button";
+import FaqIcons from '../assets/svg/faq'
 import { useCondition } from "@/context/FavoriteContext";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
@@ -43,7 +39,8 @@ const ProfilePage = () => {
 
   const chooseImage = async () => {
     try {
-      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permissionResult.granted) {
         alert("Нужно разрешение на доступ к галерее");
         return;
@@ -54,17 +51,17 @@ const ProfilePage = () => {
         quality: 0.5,
         base64: false,
       });
-  
+
       if (!result.canceled && result.assets.length > 0) {
         const manipulatedImage = await ImageManipulator.manipulateAsync(
           result.assets[0].uri,
           [{ resize: { width: 800 } }],
           { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
         );
-  
+
         if (manipulatedImage.uri) {
           setImageUri(manipulatedImage.uri);
-          await uploadImage(manipulatedImage.uri);  
+          await uploadImage(manipulatedImage.uri);
         } else {
           alert("Ошибка при обработке изображения");
         }
@@ -85,7 +82,7 @@ const ProfilePage = () => {
       name: "photo.jpg",
       type: "image/jpeg",
     });
-  
+
     try {
       const token = await AsyncStorage.getItem("tokenActivation");
       if (!token) {
@@ -100,7 +97,7 @@ const ProfilePage = () => {
         },
         body: formData,
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
         alert("Фото успешно изменено!");
@@ -114,7 +111,7 @@ const ProfilePage = () => {
       alert("Ошибка при загрузке изображения.");
     }
   };
-  
+
   const getToken = async () => {
     try {
       const storedToken = await AsyncStorage.getItem("tokenActivation");
@@ -255,13 +252,13 @@ const ProfilePage = () => {
                 center={"center"}
               >
                 <Flex gap={10}>
-                <CartActive />
+                  <CartActive />
                   <TextContent
                     fontSize={16}
                     fontWeight={500}
                     color={colors.black}
                   >
-                  Корзина
+                    Корзина
                   </TextContent>
                 </Flex>
                 <Arrow />
@@ -321,6 +318,24 @@ const ProfilePage = () => {
                   </TextContent>
                 </Flex>
                 <Arrow />
+              </Between>
+            </Wave>
+            <Wave handle={() => router.push("navigate/AboutTheApplication")}>
+              <Between
+                style={[styles.box_prof, styles.border_bot]}
+                center={"center"}
+              >
+                <Flex gap={10}>
+                  <FaqIcons />
+                  <TextContent
+                    fontSize={16}
+                    fontWeight={500}
+                    color={colors.black}
+                  >
+                    FAQ
+                  </TextContent>
+                </Flex>
+                <Arrow/>
               </Between>
             </Wave>
           </Column>

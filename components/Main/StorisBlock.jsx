@@ -57,7 +57,6 @@ export default function StoryComponent() {
         }
       }
     };
-
     fetchStories();
     return () => {
       isMounted = false;
@@ -75,13 +74,11 @@ export default function StoryComponent() {
     if (fetchedStories.length === 0) {
       return <Text style={styles.noStoriesText}>Нет доступных историй</Text>;
     }
-
     return (
       <View style={styles.storiesBlock}>
         <InstaStory
           data={fetchedStories}
-          avatarSize={100}
-          pressedBorder={10}
+          avatarSize={90}
           duration={10}
           avatarWrapperStyle={styles.avatar_wrapper}
           avatarTextStyle={styles.avatar_text_style}
@@ -103,7 +100,6 @@ export default function StoryComponent() {
       </View>
     );
   };
-
   return <View style={styles.storyContainer}>{renderContent()}</View>;
 }
 const styles = StyleSheet.create({
@@ -120,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatar_wrapper: {
-   borderRadius:22,
+   borderRadius:10,
    padding:2,
    position:'relative',
   },

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   View,
@@ -13,7 +12,6 @@ import { url } from "@/Api";
 import Header from '../../components/Main/HeaderAll'
 import Wave from "@/assets/styles/components/Wave";
 import Loading from "@/assets/ui/Loading";
-
 const PromotionDetails = () => {
   const [harry, setHarry] = useState([]);
   useEffect(() => {
@@ -42,7 +40,7 @@ const PromotionDetails = () => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={{ flexDirection: "column", gap: 6, marginBottom: 200, marginTop:8 }}>
+          <View style={{ flexDirection: "column", gap: 10, marginBottom: 200, marginTop:8 }}>
             {harry.map((el, id) => (
                 <Wave key={id} handle={() => router.push(`/details/PromotionId/${el.id}`)}>
                 <View style={styles.prom_img_box}>
@@ -62,7 +60,7 @@ const PromotionDetails = () => {
 const styles = StyleSheet.create({
   prom_img_box: {
     width: "100%",
-    height:   140,
+    height:   260,
     borderRadius: 16,
     overflow: "hidden",
   },

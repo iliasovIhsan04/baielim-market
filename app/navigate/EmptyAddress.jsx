@@ -14,7 +14,8 @@ import Column from "@/assets/styles/components/Column";
 import { colors } from "@/assets/styles/components/colors";
 import Wave from "@/assets/styles/components/Wave";
 import Close from "../../assets/svg/close";
-import Header from '../../components/Main/HeaderAll'
+import Header from "../../components/Main/HeaderAll";
+import { ScrollView } from "react-native";
 
 const EmptyAddress = () => {
   const dispatch = useDispatch();
@@ -70,51 +71,58 @@ const EmptyAddress = () => {
         <View style={{ marginTop: 30 }}>
           <Wave handle={() => router.push("/navigate/NewAddress")}>
             <View style={[stylesAll.button, styles.btn_address]}>
-              <Ionicons name="add-outline" size={24} color="#9519AD" />
+              <Ionicons name="add-outline" size={24} color="#F9671C" />
               <Text style={[stylesAll.button_text, { color: colors.feuillet }]}>
                 Добавить адрес
               </Text>
             </View>
           </Wave>
-
           {datas === false ? (
-            <View style={{ marginTop: 20 }}>
-              {data.map((item) => (
-                <TouchableOpacity
-                  onPress={() => handleActive(item.id, item.street)}
-                  key={item.id}
-                  style={[stylesAll.input, styles.input_box, { marginTop: 10 }]}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 12,
-                    }}
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+            >
+              <View style={{ marginTop: 20, marginBottom:350 }}>
+                {data.map((item) => (
+                  <TouchableOpacity
+                    onPress={() => handleActive(item.id, item.street)}
+                    key={item.id}
+                    style={[
+                      stylesAll.input,
+                      styles.input_box,
+                      { marginTop: 10 },
+                    ]}
                   >
-                    <View style={stylesAll.cell_box}>
-                      <View>
-                        {addressId === item.id && (
-                          <View style={styles.line}></View>
-                        )}
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 12,
+                      }}
+                    >
+                      <View style={stylesAll.cell_box}>
+                        <View>
+                          {addressId === item.id && (
+                            <View style={styles.line}></View>
+                          )}
+                        </View>
                       </View>
+                      <Text style={styles.placeholder_static} numberOfLines={1}>
+                        {item.address}
+                      </Text>
                     </View>
-                    <Text style={styles.placeholder_static} numberOfLines={1}>
-                      {item.street} {item.number} {item.building}{" "}
-                      {item.apartment} {item.floor}
-                    </Text>
-                  </View>
-                  <Wave
-                    handle={async () => {
-                      await delite(item.id);
-                      ordering();
-                    }}
-                  >
-                    <Close />
-                  </Wave>
-                </TouchableOpacity>
-              ))}
-            </View>
+                    <Wave
+                      handle={async () => {
+                        await delite(item.id);
+                        ordering();
+                      }}
+                    >
+                      <Close />
+                    </Wave>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
           ) : (
             <Column
               gap={30}
@@ -150,7 +158,7 @@ const styles = StyleSheet.create({
   line: {
     width: 15,
     height: 15,
-    backgroundColor:colors.feuillet,
+    backgroundColor: colors.feuillet,
     borderRadius: 50,
   },
   input_box: {

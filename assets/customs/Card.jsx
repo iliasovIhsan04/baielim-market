@@ -15,12 +15,8 @@ import { router } from "expo-router";
 const containerWidth = (Dimensions.get("window").width - 32) / 2 - 5;
 
 const Card = ({
-  newBlock,
-  percentage,
   title,
-  mini_description,
   price,
-  old_price,
   id,
   handle,
   data,
@@ -163,22 +159,6 @@ const Card = ({
         <View style={styles.img_block}>
           <Image style={styles.img_box} source={{ uri: img }} />
           <Flex gap={2}>
-            {/* {newBlock && (
-              <View style={styles.new_block}>
-                <TextContent
-                  fontSize={10}
-                  fontWeight={500}
-                  color={colors.white}
-                >
-                  NEW
-                </TextContent>
-              </View>
-            )} */}
-            {/* <View style={[styles.new_block, styles.present_box]}>
-              <TextContent fontSize={10} fontWeight={400} color={colors.white}>
-                {percentage}%
-              </TextContent>
-            </View> */}
           </Flex>
           {love && (
             <Wave
@@ -199,7 +179,7 @@ const Card = ({
                   : () => router.push("auth/Login")
               }
             >
-              {favoriteItems.has(id) ? <FavoriteActive /> : <Favorite />}
+              {favoriteItems.has(id) ? <FavoriteActive /> : <Favorite /> }
             </Wave>
           )}
           <Wave
@@ -208,6 +188,7 @@ const Card = ({
               const itemToAdd = (harry || data || harryData).find((item) => item.id === id);
               if (itemToAdd) {
                 Basket(itemToAdd.id, itemToAdd);
+                console.log('iii',harry || data || harryData)
               } else {
                 console.error("Item not found");
               }

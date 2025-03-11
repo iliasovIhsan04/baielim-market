@@ -29,6 +29,7 @@ const Promotion = () => {
     };
     fetchUserData();
   }, []);
+  
   return (
     <Wrapper padding={[24, 20]} style={{paddingHorizontal:0 , height:'100%'}} bottom={true}>
       <View

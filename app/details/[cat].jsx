@@ -36,8 +36,8 @@ const CatalogDetails = () => {
   const [isDataAvailable, setIsDataAvailable] = useState(true);
   const [modal, setModal] = useState(false);
   const [modalFilter, setModalFilter] = useState(false);
-  const [rangeValue, setRangeValue] = useState([0, 50000]); // Баштапкы диапазон
-  const [appliedRange, setAppliedRange] = useState(null); // Колдонулган фильтр диапазону
+  const [rangeValue, setRangeValue] = useState([0, 50000]);
+  const [appliedRange, setAppliedRange] = useState(null);
   const screenWidth = Dimensions.get("window").width;
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(50000);
@@ -49,8 +49,8 @@ const CatalogDetails = () => {
   const { cat = "all" } = route.params || {};
 
   const fetchData = async (
-    min = null, // Фильтрсиз режими үчүн null
-    max = null, // Фильтрсиз режими үчүн null
+    min = null,
+    max = null,
     order = ordering,
     subCategory = subCat
   ) => {
@@ -68,7 +68,6 @@ const CatalogDetails = () => {
       if (order) {
         query += `&ordering=${order}`;
       }
-      console.log("API Query:", query); 
       const response = await axios.get(query);
       const fetchedData = response.data;
       setData(fetchedData);
@@ -95,8 +94,6 @@ const CatalogDetails = () => {
       console.error("Ошибка при получении данных:", error);
     } finally {
       setLoading(false);
-      setModal(false);
-      setModalFilter(false);
     }
   };
 
@@ -107,11 +104,18 @@ const CatalogDetails = () => {
   const applyFilter = () => {
     setAppliedRange(rangeValue);
     fetchData(rangeValue[0], rangeValue[1], ordering, subCat);
+    setModalFilter(false);
   };
 
   const handleOrdering = (newOrder) => {
     setOrdering(newOrder);
-    fetchData(appliedRange ? appliedRange[0] : null, appliedRange ? appliedRange[1] : null, newOrder, subCat);
+    fetchData(
+      appliedRange ? appliedRange[0] : null,
+      appliedRange ? appliedRange[1] : null,
+      newOrder,
+      subCat
+    );
+    setModal(false); 
   };
 
   const handleCategorySelection = () => {
@@ -124,7 +128,7 @@ const CatalogDetails = () => {
   const handleTabClick = (selectedId) => {
     setSubCat(selectedId);
     setSelectedIndex(selectedId);
-    setAppliedRange(null); 
+    setAppliedRange(null);
     fetchData(null, null, ordering, selectedId);
   };
 
@@ -149,8 +153,10 @@ const CatalogDetails = () => {
   }
 
   return (
-    <View style={[stylesAll.container, styles.block_cat]}>
-      <View style={[stylesAll.header, styles.header_search]}>
+    <View style={[styles.block_cat]}>
+      <View
+        style={[stylesAll.header, styles.header_search, stylesAll.container]}
+      >
         <Wave handle={() => router.back()}>
           <Back />
         </Wave>
@@ -168,6 +174,7 @@ const CatalogDetails = () => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         horizontal={true}
+        style={[{ width: "100%" }]}
       >
         <View style={styles.catalog_tab_block}>
           <TouchableOpacity
@@ -201,222 +208,211 @@ const CatalogDetails = () => {
           ))}
         </View>
       </ScrollView>
-  
-        <View style={styles.sort_filter_block}>
-          <ModalDown modal={modal} setModal={setModal}>
-            <TextContent
-              fontSize={22}
-              fontWeight={600}
-              color={colors.black}
-              top={20}
+
+      <View style={[stylesAll.container]}>
+        <ModalDown modal={modal} setModal={setModal}>
+          <TextContent
+            fontSize={22}
+            fontWeight={600}
+            color={colors.black}
+            top={20}
+          >
+            Сортировка
+          </TextContent>
+          <View style={styles.modal_content_sort_block}>
+            <TouchableOpacity
+              style={styles.modal_content_sort_item}
+              onPress={() => handleOrdering("")}
             >
-              Сортировка
-            </TextContent>
-            <View style={styles.modal_content_sort_block}>
-              <TouchableOpacity
-                style={styles.modal_content_sort_item}
-                onPress={() => handleOrdering("")}
-              >
-                <View style={stylesAll.cell_box}>
-                  <View
-                    style={ordering === "" && styles.active_cell_box}
-                  ></View>
-                </View>
-                <Text style={stylesAll.cell_text}>По умолчанию</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.modal_content_sort_item}
-                onPress={() => handleOrdering("-sales")}
-              >
-                <View style={stylesAll.cell_box}>
-                  <View
-                    style={ordering === "-sales" && styles.active_cell_box}
-                  ></View>
-                </View>
-                <Text style={stylesAll.cell_text}>Сначала популярные</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.modal_content_sort_item}
-                onPress={() => handleOrdering("price")}
-              >
-                <View style={stylesAll.cell_box}>
-                  <View
-                    style={ordering === "price" && styles.active_cell_box}
-                  ></View>
-                </View>
-                <Text style={stylesAll.cell_text}>Сначала дешевые</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.modal_content_sort_item}
-                onPress={() => handleOrdering("-price")}
-              >
-                <View style={stylesAll.cell_box}>
-                  <View
-                    style={ordering === "-price" && styles.active_cell_box}
-                  ></View>
-                </View>
-                <Text style={stylesAll.cell_text}>Сначала дорогие</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.modal_content_sort_item}
-                onPress={() => handleOrdering("title")}
-              >
-                <View style={stylesAll.cell_box}>
-                  <View
-                    style={ordering === "title" && styles.active_cell_box}
-                  ></View>
-                </View>
-                <Text style={stylesAll.cell_text}>По алфавиту от А до Я</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.modal_content_sort_item}
-                onPress={() => handleOrdering("-title")}
-              >
-                <View style={stylesAll.cell_box}>
-                  <View
-                    style={ordering === "-title" && styles.active_cell_box}
-                  ></View>
-                </View>
-                <Text style={stylesAll.cell_text}>По алфавиту от Я до А</Text>
-              </TouchableOpacity>
-            </View>
-          </ModalDown>
-          <ModalDown modal={modalFilter} setModal={setModalFilter}>
-            <Text style={styles.sort_title}>Фильтр</Text>
-            <View style={styles.filter_block}>
-              <View style={styles.filter_tab}>
+              <View style={stylesAll.cell_box}>
+                <View style={ordering === "" && styles.active_cell_box}></View>
+              </View>
+              <Text style={stylesAll.cell_text}>По умолчанию</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modal_content_sort_item}
+              onPress={() => handleOrdering("-sales")}
+            >
+              <View style={stylesAll.cell_box}>
+                <View
+                  style={ordering === "-sales" && styles.active_cell_box}
+                ></View>
+              </View>
+              <Text style={stylesAll.cell_text}>Сначала популярные</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modal_content_sort_item}
+              onPress={() => handleOrdering("price")}
+            >
+              <View style={stylesAll.cell_box}>
+                <View
+                  style={ordering === "price" && styles.active_cell_box}
+                ></View>
+              </View>
+              <Text style={stylesAll.cell_text}>Сначала дешевые</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modal_content_sort_item}
+              onPress={() => handleOrdering("-price")}
+            >
+              <View style={stylesAll.cell_box}>
+                <View
+                  style={ordering === "-price" && styles.active_cell_box}
+                ></View>
+              </View>
+              <Text style={stylesAll.cell_text}>Сначала дорогие</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modal_content_sort_item}
+              onPress={() => handleOrdering("title")}
+            >
+              <View style={stylesAll.cell_box}>
+                <View
+                  style={ordering === "title" && styles.active_cell_box}
+                ></View>
+              </View>
+              <Text style={stylesAll.cell_text}>По алфавиту от А до Я</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modal_content_sort_item}
+              onPress={() => handleOrdering("-title")}
+            >
+              <View style={stylesAll.cell_box}>
+                <View
+                  style={ordering === "-title" && styles.active_cell_box}
+                ></View>
+              </View>
+              <Text style={stylesAll.cell_text}>По алфавиту от Я до А</Text>
+            </TouchableOpacity>
+          </View>
+        </ModalDown>
+        <ModalDown modal={modalFilter} setModal={setModalFilter}>
+          <Text style={styles.sort_title}>Фильтр</Text>
+          <View style={styles.filter_block}>
+            <View style={styles.filter_tab}>
+              <TextContent fontSize={16} fontWeight={400} color={colors.gray2}>
+                От
+              </TextContent>
+              <View style={styles.filter_box}>
                 <TextContent
-                  fontSize={16}
-                  fontWeight={400}
-                  color={colors.gray2}
-                >
-                  От
-                </TextContent>
-                <View style={styles.filter_box}>
-                  <TextContent
-                    fontSize={18}
-                    fontWeight={500}
-                    color={colors.black}
-                  >
-                    {rangeValue[0]}
-                  </TextContent>
-                </View>
-              </View>
-              <View style={styles.filter_tab}>
-                <TextContent
-                  fontSize={16}
-                  fontWeight={400}
-                  color={colors.gray2}
-                >
-                  До
-                </TextContent>
-                <View style={styles.filter_box}>
-                  <TextContent
-                    fontSize={18}
-                    fontWeight={500}
-                    color={colors.black}
-                  >
-                    {rangeValue[1]}
-                  </TextContent>
-                </View>
-              </View>
-              <View
-                style={{
-                  width: "100%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <MultiSlider
-                  values={rangeValue}
-                  sliderLength={screenWidth - 50}
-                  onValuesChange={(values) => setRangeValue(values)}
-                  min={minPrice}
-                  max={maxPrice}
-                  step={2}
-                  allowOverlap={false}
-                  snapped
-                  selectedStyle={{ backgroundColor: colors.feuillet }}
-                  unselectedStyle={{ backgroundColor: colors.feuillet }}
-                  markerStyle={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: colors.feuillet,
-                    borderColor: colors.feuillet,
-                  }}
-                />
-              </View>
-              <View style={{ width: "100%" }}>
-                <Button handle={applyFilter} color={colors.feuillet}>
-                  Применить
-                </Button>
-              </View>
-            </View>
-          </ModalDown>
-          <View style={{ width: "100%", marginBottom:10 }}>
-            <Column gap={20} style={{ marginTop: 20 }}>
-              {Array.isArray(data) && data.length > 0 && (
-                <TextContent
-                  fontSize={22}
-                  fontWeight={600}
+                  fontSize={18}
+                  fontWeight={500}
                   color={colors.black}
                 >
-                  {subCat ? data[0].subcat_name : "Все продукты"}
+                  {rangeValue[0]}
                 </TextContent>
-              )}
-              <Between center={"center"}>
-                <Wave handle={() => setModal(true)}>
-                  <SortIcons />
-                </Wave>
+              </View>
+            </View>
+            <View style={styles.filter_tab}>
+              <TextContent fontSize={16} fontWeight={400} color={colors.gray2}>
+                До
+              </TextContent>
+              <View style={styles.filter_box}>
                 <TextContent
-                  fontSize={14}
-                  fontWeight={400}
-                  color={colors.gray2}
+                  fontSize={18}
+                  fontWeight={500}
+                  color={colors.black}
                 >
-                  {data?.length} товара
+                  {rangeValue[1]}
                 </TextContent>
-                <Wave handle={() => setModalFilter(true)}>
-                  <FilterIcons />
-                </Wave>
-              </Between>
-            </Column>
+              </View>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <MultiSlider
+                values={rangeValue}
+                sliderLength={screenWidth - 50}
+                onValuesChange={(values) => setRangeValue(values)}
+                min={minPrice}
+                max={maxPrice}
+                step={2}
+                allowOverlap={false}
+                snapped
+                selectedStyle={{ backgroundColor: colors.feuillet }}
+                unselectedStyle={{ backgroundColor: colors.feuillet }}
+                markerStyle={{
+                  height: 20,
+                  width: 20,
+                  backgroundColor: colors.feuillet,
+                  borderColor: colors.feuillet,
+                }}
+              />
+            </View>
+            <View style={{ width: "100%" }}>
+              <Button handle={applyFilter} color={colors.feuillet}>
+                Применить
+              </Button>
+            </View>
           </View>
+        </ModalDown>
+        <View style={{ width: "100%", marginBottom: 10 }}>
+          <Column gap={20} style={{ marginTop: 20 }}>
+            {Array.isArray(data) && data.length > 0 && (
+              <TextContent fontSize={22} fontWeight={600} color={colors.black}>
+                {subCat ? data[0].subcat_name : "Все продукты"}
+              </TextContent>
+            )}
+            <Between center={"center"}>
+              <Wave handle={() => setModal(true)}>
+                <SortIcons />
+              </Wave>
+              <TextContent fontSize={14} fontWeight={400} color={colors.gray2}>
+                {data?.length} товара
+              </TextContent>
+              <Wave handle={() => setModalFilter(true)}>
+                <FilterIcons />
+              </Wave>
+            </Between>
+          </Column>
         </View>
-        <ScrollView
+      </View>
+      <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        style={[{ width: "100%", height: "100%" }, stylesAll.container]}
       >
-        {data === null ? (
-          <Loading />
-        ) : data.length === 0 ? (
-          <View style={styles.null_product_block}>
-            <Text style={stylesAll.barrcode_page_text}>Нет товара!</Text>
+        {loading ? (
+          <View style={stylesAll.loading_catalog_page}>
+            <Loading />
           </View>
         ) : (
           <View style={styles.catalog_block_all}>
-            {data
-              .filter((obj) =>
-                obj.title
-                  .toLocaleLowerCase()
-                  .includes(value.toLocaleLowerCase())
-              )
-              .map((el, id) => (
-                <Card
-                  handle={() => router.push(`/details/ProductId/${el.id}`)}
-                  id={el.id}
-                  key={id}
-                  title={el.title}
-                  mini_description={el.description}
-                  price={el.price}
-                  old_price={el.discount_price}
-                  percentage={el.discount_percentage}
-                  newBlock={el.new}
-                  data={data}
-                  love={true}
-                  img={el.img}
-                />
-              ))}
+            {data.filter((obj) =>
+              obj.title.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+            ).length === 0 ? (
+              <View style={styles.null_product_block}>
+                <Text style={stylesAll.barrcode_page_text}>Нет товара!</Text>
+              </View>
+            ) : (
+              data
+                .filter((obj) =>
+                  obj.title
+                    .toLocaleLowerCase()
+                    .includes(value.toLocaleLowerCase())
+                )
+                .map((el, id) => (
+                  <Card
+                    handle={() => router.push(`/details/ProductId/${el.id}`)}
+                    id={el.id}
+                    key={id}
+                    title={el.title}
+                    mini_description={el.description}
+                    price={el.price}
+                    old_price={el.discount_price}
+                    percentage={el.discount_percentage}
+                    newBlock={el.new}
+                    data={data}
+                    love={true}
+                    img={el.img}
+                  />
+                ))
+            )}
           </View>
         )}
       </ScrollView>
@@ -431,6 +427,7 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 20,
     marginBottom: 10,
+    marginHorizontal: 16,
   },
   tab: {
     backgroundColor: "#EAEAEA",

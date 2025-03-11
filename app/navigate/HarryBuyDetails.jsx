@@ -58,7 +58,7 @@ const HarryBuyDetails = () => {
           >
             {harry.map((item, id) => (
               <View style={styles.prom_block} key={id}>
-              <Card key={id} id={item.id} price={item.price} old_price={item.discount_price} percentage={item.discount_percentage} title={item.title} mini_description={item.description} img={item.img[0].img} harryData={harry} handle={() => router.push(`/details/ProductId/${item.id}`)} love={true}/>
+              <Card key={id} id={item.id} price={item.price} old_price={item.discount_price} percentage={item.discount_percentage} title={item.title} mini_description={item.description} img={item.img} harryData={harry} handle={() => router.push(`/details/ProductId/${item.id}`)} love={true}/>
               </View>
             ))}
           </View>
