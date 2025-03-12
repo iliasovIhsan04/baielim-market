@@ -1,6 +1,6 @@
 import { colors } from "@/assets/styles/components/colors";
-import TextContent from "@/assets/styles/components/TextContent";
 import Loading from "@/assets/ui/Loading";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -16,21 +16,28 @@ export default function StoryComponent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     let isMounted = true;
+    
     const fetchStories = async () => {
       try {
-        const response = await fetch('https://bekbekei.store/stories');
+        const cachedStories = await AsyncStorage.getItem("stories_cache");
+        if (cachedStories) {
+          setFetchedStories(JSON.parse(cachedStories));
+          setLoading(false);
+          return;
+        }
+        const response = await fetch('https://f68d-158-181-206-180.ngrok-free.app/stories');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const storiesData = await response.json();
         if (!isMounted) return;
-
         const transformedStories = storiesData
           .filter((user) => user && typeof user === 'object')
           .map((user) => ({
             user_id: Number(user.id) || Date.now(),
             user_image: user.img || "https://placeholder.com/user.jpg",
-            user_name: user.title || "User",
+            user_name: user.title || "",
             stories: Array.isArray(user.stories) && user.stories.length > 0
               ? user.stories
                   .filter((story) => story && typeof story === 'object')
@@ -40,15 +47,15 @@ export default function StoryComponent() {
                     duration: Number(story.duration) || 5000,
                     created_at: story.created_at || new Date().toISOString(),
                     type: "image",
-                   
                   }))
               : []
           }))
           .filter((user) => user.stories.length > 0);
-
+  
         if (isMounted) {
           setFetchedStories(transformedStories);
           setLoading(false);
+          await AsyncStorage.setItem("stories_cache", JSON.stringify(transformedStories)); // Маалыматтарды сактоо
         }
       } catch (error) {
         if (isMounted) {
@@ -57,11 +64,14 @@ export default function StoryComponent() {
         }
       }
     };
+  
     fetchStories();
+  
     return () => {
       isMounted = false;
     };
   }, []);
+  
 
   const renderContent = () => {
     if (loading) {
@@ -116,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatar_wrapper: {
-   borderRadius:10,
+   borderRadius: 20,
    padding:2,
    position:'relative',
   },

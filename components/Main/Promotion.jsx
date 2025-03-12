@@ -29,7 +29,6 @@ const Promotion = () => {
     };
     fetchUserData();
   }, []);
-  
   return (
     <Wrapper padding={[24, 20]} style={{paddingHorizontal:0 , height:'100%'}} bottom={true}>
       <View
@@ -40,7 +39,7 @@ const Promotion = () => {
           paddingHorizontal:16
         }}
       >
-        <TextContent fontSize={20} fontWeight={600} color={colors.black}>Успей купить</TextContent>
+        <TextContent fontSize={20} fontWeight={600} color={colors.black}>Акция</TextContent>
         <Wave
           style={{ flexDirection: "row", alignItems: "center" }}
           handle={() => router.push("/navigate/PromotionDetails")}

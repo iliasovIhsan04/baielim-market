@@ -7,7 +7,7 @@ export const colors = {
     red: "#FF0000",
     feuillet:'#F9671C',
     feuilletOpacity:'#F9671C33',
-    green:'#0fde1d',
+    green:'#22c55d',
     late:'#FF5DD4' ,
     gray2:'#AAAAAA',
     yellow:'#CE8E2B',

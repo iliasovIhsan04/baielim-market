@@ -20,7 +20,6 @@ const CatalogPage = () => {
   const [filteredData, setFilteredData] = useState([]);
   const api = url + "/product/categories";
   const [value, setValue] = useState("");
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {

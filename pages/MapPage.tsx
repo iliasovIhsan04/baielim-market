@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   section_map_block: {
-    backgroundColor: colors.phon,
+    backgroundColor: colors.green,
     padding: 16,
     borderRadius: 14,
     flexDirection: "column",
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     height: 3,
-    backgroundColor: colors.feuillet,
+    backgroundColor: colors.green,
     width: "45%",
     marginLeft: 17,
   },

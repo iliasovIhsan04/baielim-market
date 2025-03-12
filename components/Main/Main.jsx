@@ -295,7 +295,7 @@ export default function Main() {
                 </View>
               </Column>
             </View>
-            <HurryUpToBuy />
+            {/* <HurryUpToBuy /> */}
             <Promotion />
           </Column>
         </View>
