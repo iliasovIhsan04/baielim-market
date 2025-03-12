@@ -2,7 +2,7 @@ import { colors } from "@/assets/styles/components/colors";
 import TextContent from "@/assets/styles/components/TextContent";
 import Wave from "@/assets/styles/components/Wave";
 import axios from "axios";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Main/HeaderAll";
 import { View, StyleSheet, Image, Dimensions, Text } from "react-native";
@@ -20,6 +20,7 @@ const CatalogPage = () => {
   const [filteredData, setFilteredData] = useState([]);
   const api = url + "/product/categories";
   const [value, setValue] = useState("");
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {

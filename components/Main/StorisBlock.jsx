@@ -28,7 +28,7 @@ export default function StoryComponent() {
           setLoading(false);
           return;
         }
-        const response = await fetch('https://f68d-158-181-206-180.ngrok-free.app/stories');
+        const response = await fetch('https://bekbekei.store/stories');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const storiesData = await response.json();
         if (!isMounted) return;

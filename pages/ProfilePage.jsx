@@ -320,7 +320,7 @@ const ProfilePage = () => {
                 <Arrow />
               </Between>
             </Wave>
-            <Wave handle={() => router.push("navigate/AboutTheApplication")}>
+            <Wave handle={() => router.push("navigate/Faq")}>
               <Between
                 style={[styles.box_prof, styles.border_bot]}
                 center={"center"}

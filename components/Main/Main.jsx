@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import BonusCart from "./BonusCart";
 import Header from "./Header";
-import HurryUpToBuy from "./HurryUpToBuy";
 import Promotion from "./Promotion";
 import { stylesAll } from "@/style";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,7 +23,6 @@ import { useRoute } from "@react-navigation/native";
 import Column from "../../assets/styles/components/Column";
 import { colors } from "@/assets/styles/components/colors";
 import Flex from "../../assets/styles/components/Flex";
-import Scanner from "../../assets/svg/imgScanner";
 import Favorite from "../../assets/svg/favoriteImg";
 import TextContent from "@/assets/styles/components/TextContent";
 import Wave from "@/assets/styles/components/Wave";
