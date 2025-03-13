@@ -53,7 +53,6 @@ const SettingPage = () => {
         router.push("/auth/Registration");
       }
     } catch (error) {
-      console.log("Error:", error);
     }
   };
 

@@ -140,7 +140,9 @@ const CatalogDetails = () => {
     } catch (error) {
       console.error("Ошибка при получении субкатегорий:", error);
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false); 
+      }, 3000);
     }
   };
 

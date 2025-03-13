@@ -104,7 +104,6 @@ export default function Main() {
         if (token) {
           setPushToken(token);
         } else {
-          console.log("Push token not found.");
         }
       } catch (error) {
         console.error("Error retrieving push token:", error);
@@ -140,11 +139,9 @@ export default function Main() {
       }
     };
     const handleNotificationClick = (event) => {
-      console.log("Push уведомление нажато:", event);
 
       const screen = event?.notification?.additionalData?.screen;
       if (screen) {
-        console.log("Навигация:", screen);
         router.push(screen);
       } else {
         navigation.navigate("navigate/Notifications");
@@ -179,7 +176,6 @@ export default function Main() {
           headers: { Authorization: `Token ${local}` },
         }
       );
-      console.log("Токен успешно отправлен:", response.data);
     } catch (error) {
       console.error("Ошибка при отправке токена на сервер:", error);
     }

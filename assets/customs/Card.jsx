@@ -71,7 +71,6 @@ const Card = ({
       if (itemExists) {
         await AsyncStorage.removeItem(`activeItemFeatured${id}`);
         updatedCart = updatedCart.filter((item) => item.id !== id);
-        console.log(`ID ${id} удален`);
       } else {
         await AsyncStorage.setItem(`activeItemFeatured${id}`, `${id}`);
         const itemToAdd = (harry || data || harryData).find(
@@ -80,7 +79,6 @@ const Card = ({
         if (itemToAdd) {
           updatedCart.push(itemToAdd);
         }
-        console.log(`ID ${id} добавлен`);
       }
       await AsyncStorage.setItem("cartFeatured", JSON.stringify(updatedCart));
       setCart(updatedCart);
@@ -188,7 +186,6 @@ const Card = ({
               const itemToAdd = (harry || data || harryData).find((item) => item.id === id);
               if (itemToAdd) {
                 Basket(itemToAdd.id, itemToAdd);
-                console.log('iii',harry || data || harryData)
               } else {
                 console.error("Item not found");
               }

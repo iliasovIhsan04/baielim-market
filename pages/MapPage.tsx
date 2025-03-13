@@ -79,7 +79,6 @@ export default function MapPage() {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-          console.log("Permission to access location was denied");
           return;
         }
         let location = await Location.getCurrentPositionAsync({

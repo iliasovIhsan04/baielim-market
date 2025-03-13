@@ -42,7 +42,6 @@ const EmptyAddress = () => {
       });
       setData(response.data);
     } catch (error) {
-      console.log("Error", error);
     }
   };
 
@@ -58,7 +57,6 @@ const EmptyAddress = () => {
       });
       setOrderDelete((prev) => prev.filter((el) => el !== id));
     } catch (error) {
-      console.log("Error", error);
     }
   };
 

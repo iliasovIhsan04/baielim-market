@@ -84,6 +84,7 @@ export default function StoryComponent() {
     if (fetchedStories.length === 0) {
       return <Text style={styles.noStoriesText}>Нет доступных историй</Text>;
     }
+    
     return (
       <View style={styles.storiesBlock}>
         <InstaStory
@@ -112,6 +113,7 @@ export default function StoryComponent() {
   };
   return <View style={styles.storyContainer}>{renderContent()}</View>;
 }
+
 const styles = StyleSheet.create({
   avatar_text_style :{
     color:colors.white,

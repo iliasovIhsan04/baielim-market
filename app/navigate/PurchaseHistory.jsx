@@ -43,7 +43,6 @@ const PurchaseHistory = () => {
           : `${url}/order/list/`;
       try {
         const response = await axios.get(urlWithDates, { headers });
-        console.log("Data fetched successfully:", response.data);
         setOrders(response.data);
       } catch (error) {
         console.error("Ошибка при получении данных:", error);

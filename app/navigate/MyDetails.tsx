@@ -115,7 +115,6 @@ const MyDetails = () => {
 
   const data = useSelector((state: RootState) => state.users);
   const user = data?.user;
-  console.log('me', user)
 
   useEffect(() => {
     if (user) {
