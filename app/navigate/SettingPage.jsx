@@ -103,7 +103,7 @@ const SettingPage = () => {
               </Text>
             </View>
             <Switch
-             trackColor={{ false: "#D2D2D2", true: "#F9671C" }}
+             trackColor={{ false: "#D2D2D2", true: "#008C44" }}
               thumbColor={isPetTwo ? "#f4f3f4" : "#f4f3f4"}
               ios_backgroundColor="#D2D2D2"
               onValueChange={toggleSwitchOne}
@@ -124,7 +124,7 @@ const SettingPage = () => {
               </Text>
             </View>
             <Switch
-              trackColor={{ false: "#D2D2D2", true: "#F9671C" }}
+              trackColor={{ false: "#D2D2D2", true: "#008C44" }}
               thumbColor={isPetTwo ? "#f4f3f4" : "#f4f3f4"}
               ios_backgroundColor="#D2D2D2"
               onValueChange={toggleSwitchTwo}

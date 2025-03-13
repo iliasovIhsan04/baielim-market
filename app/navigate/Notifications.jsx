@@ -37,18 +37,6 @@ const Notifications = () => {
     return <Loading />;
   }
 
-  if (!loading && notifications.length === 0) {
-    return (
-      <View style={stylesAll.background_block}>
-        <View style={stylesAll.container}>
-          <Header handleBack={"/(tabs)/profile"}>Уведомления</Header>
-          <View style={styles.empty_box}>
-            <Text style={styles.empty_text}>Уведомлений нет!</Text>
-          </View>
-        </View>
-      </View>
-    );
-  }
 
   const cleanText = (text: string) => {
     return text.replace(/<\/?[^>]+(>|$)/g, "");
@@ -89,9 +77,6 @@ const Notifications = () => {
               Тут будут появляться ваши новые уведомления
               </Text>
               </Column>
-              <View style={{width:'100%'}}>
-              <Buttton color={colors.feuillet} handle={() => router.push("/(tabs)/catalog")}>Перейти в каталог</Buttton>
-              </View>
             </View>
           </View>
           )

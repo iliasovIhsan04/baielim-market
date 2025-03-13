@@ -71,7 +71,7 @@ const EmptyAddress = () => {
         <View style={{ marginTop: 30 }}>
           <Wave handle={() => router.push("/navigate/NewAddress")}>
             <View style={[stylesAll.button, styles.btn_address]}>
-              <Ionicons name="add-outline" size={24} color="#F9671C" />
+              <Ionicons name="add-outline" size={24} color="#008C44" />
               <Text style={[stylesAll.button_text, { color: colors.feuillet }]}>
                 Добавить адрес
               </Text>

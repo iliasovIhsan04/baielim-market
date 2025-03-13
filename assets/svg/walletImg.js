@@ -8,7 +8,7 @@ const SvgComponent = (props) => (
     fill="none"
     {...props}
   >
-    <G stroke="#F9671C" strokeWidth={2} clipPath="url(#a)">
+    <G stroke="#008C44" strokeWidth={2} clipPath="url(#a)">
       <Path
         strokeLinecap="round"
         strokeLinejoin="round"

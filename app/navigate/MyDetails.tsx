@@ -408,7 +408,7 @@ const MyDetails = () => {
             >
               <Text style={styles.switch_text}>Наличие домашних животных</Text>
               <Switch
-                trackColor={{ false: "#3e3e3e", true: "#F9671C" }}
+                trackColor={{ false: "#3e3e3e", true: "#008C44" }}
                 value={info.car}
                 onValueChange={(value) => {
                   setInfo((prev) => ({ ...prev, car: value }));
@@ -430,7 +430,7 @@ const MyDetails = () => {
             >
               <Text style={styles.switch_text}>Наличие автомобиля</Text>
               <Switch
-                trackColor={{ false: "#3e3e3e", true: "#F9671C" }}
+                trackColor={{ false: "#3e3e3e", true: "#008C44" }}
                 value={info.animal}
                 onValueChange={(value) => {
                   setInfo((prev) => ({ ...prev, animal: value }));

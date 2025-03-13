@@ -2,7 +2,7 @@
   "name": "Bella Vita",
   "displayName": "Bella Vita",
   "slug": "bella-vita",
-  // "icon": "./assets/bella-vita.png",
+  "icon": "./assets/baielim-logo.png",
   "android": {
     "package": "com.navisdevs.bellavita",
     "compileSdkVersion": 34,
@@ -13,9 +13,9 @@
     "bundleIdentifier": "com.navisdevs.bellavita"
   },
   "splash": {
-    "image": "./assets/images/bellaSplash.png",
+    "image": "./assets/images/baielimSplash.png",
     "resizeMode": "contain",
-    "backgroundColor": "#9519AD"
+    "backgroundColor": "#fff"
   },
   "version": "1.0.1",
   "extra": {

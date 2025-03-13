@@ -8,6 +8,7 @@ import { stylesAll } from "../../style";
 import Wave from "../../assets/styles/components/Wave";
 import TextContent from "@/assets/styles/components/TextContent";
 import Flex from "../../assets/styles/components/Flex";
+import { colors } from "../../assets/styles/components/colors";
 
 const Faq = () => {
   const [faqData, setFaqData] = useState([]);
@@ -25,7 +26,6 @@ const Faq = () => {
         });
         setFaqData(response.data);
       } catch (error) {
-        console.error("FAQ fetch error:", error.message);
         setError("Failed to load FAQ data");
       } finally {
         setLoading(false);
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   errorText: {
-    color: 'red',
+    color: colors.feuillet,
     fontSize: 16,
   },
   noData: {

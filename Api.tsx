@@ -1,1 +1,1 @@
-export const url = "https://bekbekei.store/";
+export const url = "https://bekbekei.store";
