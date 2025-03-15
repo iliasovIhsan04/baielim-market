@@ -36,7 +36,7 @@ export default function RootLayout() {
       console.error("Font loading error:", error);
     }
   };
-
+  
   useEffect(() => {
     (async () => {
       try {

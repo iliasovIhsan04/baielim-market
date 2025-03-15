@@ -26,6 +26,7 @@ const EmptyAddress = () => {
   const addressId = useSelector((state) => state.selectedAddress.selectedId);
 
   const handleActive = (id, address) => {
+    console.log("ID:", id, "Address:", address);
     router.push("/navigate/PlacingOrder");
     dispatch(setSelectedAddress({ id, address }));
   };
@@ -61,7 +62,6 @@ const EmptyAddress = () => {
   };
 
   const datas = data[0]?.active;
-
   return (
     <View style={stylesAll.background_block}>
       <View style={stylesAll.container}>
@@ -83,7 +83,7 @@ const EmptyAddress = () => {
               <View style={{ marginTop: 20, marginBottom:350 }}>
                 {data.map((item) => (
                   <TouchableOpacity
-                    onPress={() => handleActive(item.id, item.street)}
+                    onPress={() => handleActive(item.id, item.address)}
                     key={item.id}
                     style={[
                       stylesAll.input,
